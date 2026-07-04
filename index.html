@@ -12,16 +12,41 @@
    DESIGN TOKENS  ―  DESIGN.md (Vivit Cyber-Pop) 準拠
    ========================================================= */
 :root{
-  --surface:#131313; --surface-dim:#131313; --surface-bright:#3a3939;
-  --surface-container-lowest:#0e0e0e; --surface-container-low:#1c1b1b;
-  --surface-container:#201f1f; --surface-container-high:#2a2a2a; --surface-container-highest:#353534;
-  --on-surface:#e5e2e1; --on-surface-variant:#e5bcc4; --outline:#ac878f; --outline-variant:#5c3f45;
-  --primary:#ffb1c3; --on-primary:#66002c; --primary-container:#ff4b89;
-  --secondary:#d3fbff; --secondary-container:#00eefc;
-  --tertiary:#dfb7ff; --tertiary-container:#ba6bff;
-  --error:#ffb4ab; --error-container:#93000a;
-  --neon-lime:#CCFF00; --electric-yellow:#FFF500; --glitch-white:#F0F0F0; --deep-void:#150020;
-  --unit:4px; --gutter:24px; --margin-mobile:16px; --margin-desktop:48px; --slant:3deg; --clip:14px;
+  /* surfaces */
+  --surface:#131313;
+  --surface-dim:#131313;
+  --surface-bright:#3a3939;
+  --surface-container-lowest:#0e0e0e;
+  --surface-container-low:#1c1b1b;
+  --surface-container:#201f1f;
+  --surface-container-high:#2a2a2a;
+  --surface-container-highest:#353534;
+  --on-surface:#e5e2e1;
+  --on-surface-variant:#e5bcc4;
+  --outline:#ac878f;
+  --outline-variant:#5c3f45;
+  /* brand */
+  --primary:#ffb1c3;
+  --on-primary:#66002c;
+  --primary-container:#ff4b89;
+  --secondary:#d3fbff;
+  --secondary-container:#00eefc;
+  --tertiary:#dfb7ff;
+  --tertiary-container:#ba6bff;
+  --error:#ffb4ab;
+  --error-container:#93000a;
+  /* signature accents */
+  --neon-lime:#CCFF00;
+  --electric-yellow:#FFF500;
+  --glitch-white:#F0F0F0;
+  --deep-void:#150020;
+  /* spacing */
+  --unit:4px;
+  --gutter:24px;
+  --margin-mobile:16px;
+  --margin-desktop:48px;
+  --slant:3deg;
+  --clip:14px; /* chamfered corner size */
 }
 
 /* =========================================================
@@ -30,35 +55,60 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
-  background:var(--surface); color:var(--on-surface);
+  background:var(--surface);
+  color:var(--on-surface);
   font-family:'Space Grotesk',sans-serif;
-  font-size:16px; line-height:24px; min-height:100vh; overflow-x:hidden; position:relative;
+  font-size:16px;line-height:24px;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
 }
+/* dot-matrix + deep-void ambient background */
 body::before{
-  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
     radial-gradient(circle at 18% 12%, rgba(186,107,255,.10), transparent 42%),
     radial-gradient(circle at 85% 80%, rgba(0,238,252,.08), transparent 45%),
     radial-gradient(var(--surface-container-high) 1px, transparent 1px);
   background-size:auto,auto,22px 22px;
 }
+/* scanlines overlay */
 body::after{
-  content:""; position:fixed; inset:0; z-index:9000; pointer-events:none;
-  background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0px,rgba(0,0,0,0) 2px,rgba(0,0,0,.18) 3px,rgba(0,0,0,0) 4px);
-  mix-blend-mode:multiply; opacity:.55;
+  content:"";position:fixed;inset:0;z-index:9000;pointer-events:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,.18) 3px,
+    rgba(0,0,0,0) 4px);
+  mix-blend-mode:multiply;opacity:.55;
 }
 .wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 var(--margin-mobile)}
 @media(min-width:768px){.wrap{padding:0 var(--margin-desktop)}}
+
 .mono{font-family:'JetBrains Mono',monospace}
 .caps{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:12px;line-height:16px}
-.clipbox{clip-path:polygon(0 0,calc(100% - var(--clip)) 0,100% var(--clip),100% 100%,var(--clip) 100%,0 calc(100% - var(--clip)))}
+
+/* clipped-corner utility (chamfered) */
+.clipbox{
+  clip-path:polygon(
+    0 0, calc(100% - var(--clip)) 0, 100% var(--clip),
+    100% 100%, var(--clip) 100%, 0 calc(100% - var(--clip)));
+}
 
 /* =========================================================
    HEADER
    ========================================================= */
 header{position:relative;z-index:2;padding-top:28px;padding-bottom:18px}
-.hud-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.hud-chip{background:#000;color:var(--neon-lime);border:1px solid var(--outline-variant);padding:6px 10px;display:inline-flex;align-items:center;gap:8px}
+.hud-top{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;flex-wrap:wrap;margin-bottom:18px;
+}
+.hud-chip{
+  background:#000;color:var(--neon-lime);
+  border:1px solid var(--outline-variant);
+  padding:6px 10px;display:inline-flex;align-items:center;gap:8px;
+}
 .hud-chip.cyan{color:var(--secondary-container)}
 .hud-chip.pink{color:var(--primary)}
 .hud-chip.btn{cursor:pointer;font:inherit;transition:background .1s,color .1s}
@@ -67,6 +117,7 @@ header{position:relative;z-index:2;padding-top:28px;padding-bottom:18px}
 .hud-chip.cyan .led{background:var(--secondary-container);box-shadow:0 0 8px var(--secondary-container)}
 @keyframes blink{0%,70%{opacity:1}71%,100%{opacity:.25}}
 
+/* SVG glitch logo */
 .logo-stage{position:relative;line-height:0}
 .logo-stage svg{width:100%;max-width:760px;height:auto;display:block}
 .glitch-layer{animation:none}
@@ -74,23 +125,46 @@ header{position:relative;z-index:2;padding-top:28px;padding-bottom:18px}
 .layer-pink{animation:shiftPink 3.4s infinite steps(40)}
 @keyframes shiftCyan{0%,92%,100%{transform:translate(0,0)}93%{transform:translate(-4px,1px)}96%{transform:translate(3px,-1px)}}
 @keyframes shiftPink{0%,90%,100%{transform:translate(0,0)}91%{transform:translate(4px,-1px)}94%{transform:translate(-3px,1px)}}
-
 /* =========================================================
    SETTINGS MODAL
    ========================================================= */
-.settings-overlay{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:20px}
+.settings-overlay{
+  position:fixed;inset:0;z-index:50;
+  background:rgba(0,0,0,.7);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
 .settings-overlay.open{display:flex}
-.settings{background:var(--surface-container-low);border:2px solid var(--secondary-container);box-shadow:8px 8px 0 0 rgba(0,0,0,.6);padding:18px 18px 16px;width:100%;max-width:520px;max-height:90vh;overflow:auto}
+.settings{
+  background:var(--surface-container-low);
+  border:2px solid var(--secondary-container);
+  box-shadow:8px 8px 0 0 rgba(0,0,0,.6);
+  padding:18px 18px 16px;width:100%;max-width:520px;max-height:90vh;overflow:auto;
+}
 .settings h3{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:.03em;text-transform:uppercase;color:var(--secondary-container);margin-bottom:14px}
 .settings-grid{display:grid;grid-template-columns:1fr;gap:14px}
 @media(min-width:700px){.settings-grid{grid-template-columns:1fr 1fr}}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{color:var(--on-surface-variant)}
-.field input{background:var(--surface-container-lowest);color:var(--on-surface);border:none;border-bottom:2px solid var(--outline-variant);font-family:'JetBrains Mono',monospace;font-size:14px;padding:8px 6px;width:100%}
+.field input{
+  background:var(--surface-container-lowest);color:var(--on-surface);
+  border:none;border-bottom:2px solid var(--outline-variant);
+  font-family:'JetBrains Mono',monospace;font-size:14px;padding:8px 6px;
+  width:100%;
+}
 .field input:focus{outline:none;border-bottom-color:var(--primary)}
 .settings-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.settings.danger{border-color:var(--error);box-shadow:8px 8px 0 0 var(--error-container)}
+.settings.danger h3{color:var(--error)}
+.settings-overlay.danger-overlay{z-index:60}
 
-.btn-sm{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:12px;cursor:pointer;border:2px solid var(--glitch-white);background:transparent;color:var(--glitch-white);padding:9px 16px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:background .1s,color .1s,opacity .1s}
+/* generic small action button */
+.btn-sm{
+  font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;font-size:12px;cursor:pointer;border:2px solid var(--glitch-white);
+  background:transparent;color:var(--glitch-white);padding:9px 16px;
+  clip-path:polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition:background .1s,color .1s,opacity .1s;
+}
 .btn-sm:hover{background:var(--glitch-white);color:#000}
 .btn-sm.primary{background:var(--secondary-container);color:#000;border-color:var(--secondary-container)}
 .btn-sm.primary:hover{background:var(--primary);border-color:var(--primary)}
@@ -99,38 +173,72 @@ header{position:relative;z-index:2;padding-top:28px;padding-bottom:18px}
 .btn-sm:disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
 
 /* =========================================================
-   BANNER
+   BANNER (status / error messages)
    ========================================================= */
-.banner{border:2px solid var(--outline-variant);padding:10px 14px;margin:14px 0;font-family:'JetBrains Mono',monospace;font-size:12px;display:none;gap:10px;align-items:flex-start;word-break:break-word}
+.banner{
+  border:2px solid var(--outline-variant);padding:10px 14px;margin:14px 0;
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:none;gap:10px;align-items:flex-start;
+  word-break:break-word;
+}
 .banner.show{display:flex}
 .banner.error{border-color:var(--error);color:var(--error)}
 .banner.info{border-color:var(--secondary-container);color:var(--secondary-container)}
 .banner.ok{border-color:var(--neon-lime);color:var(--neon-lime)}
 .banner .msg{flex:1}
 .banner .close{cursor:pointer;color:inherit;font-weight:700}
+
+/* spinner (square, on-brand with "sharp 0px" shape language) */
 .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--outline-variant);border-top-color:var(--secondary-container);animation:spin .6s linear infinite;vertical-align:-1px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* =========================================================
    TABS
    ========================================================= */
-.tabbar{display:flex;align-items:flex-end;gap:6px;margin-top:26px;border-bottom:3px solid var(--glitch-white);flex-wrap:wrap}
-.tab{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:var(--on-surface-variant);background:var(--surface-container-low);border:2px solid var(--outline-variant);border-bottom:none;padding:11px 20px;cursor:pointer;position:relative;top:3px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);transition:background .12s,color .12s,transform .08s}
+.tabbar{
+  display:flex;align-items:flex-end;gap:6px;margin-top:26px;
+  border-bottom:3px solid var(--glitch-white);
+  flex-wrap:wrap;
+}
+.tab{
+  font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;font-size:13px;color:var(--on-surface-variant);
+  background:var(--surface-container-low);
+  border:2px solid var(--outline-variant);border-bottom:none;
+  padding:11px 20px;cursor:pointer;position:relative;top:3px;
+  clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  transition:background .12s,color .12s,transform .08s;
+}
 .tab:hover{color:var(--glitch-white);background:var(--surface-container)}
 .tab:focus-visible{outline:2px solid var(--secondary-container);outline-offset:2px}
 .tab .dot{color:var(--secondary-container)}
-.tab.active{background:var(--primary-container);color:#000;border-color:var(--primary-container);box-shadow:0 -3px 0 0 var(--secondary-container)}
+.tab.active{
+  background:var(--primary-container);color:#000;border-color:var(--primary-container);
+  box-shadow:0 -3px 0 0 var(--secondary-container);
+}
 .tab.active .dot{color:var(--deep-void)}
 
 /* =========================================================
-   ACTION BAR
+   ACTION BAR (upload)
    ========================================================= */
-.actionbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin:22px 0 18px}
+.actionbar{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  flex-wrap:wrap;margin:22px 0 18px;
+}
 .context-label{display:flex;flex-direction:column;gap:4px}
 .context-label .ctx-mode{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.04em;text-transform:uppercase;color:var(--glitch-white)}
 .context-label .ctx-mode .em{color:var(--primary)}
 .context-label small{color:var(--outline)}
-.btn-upload{--bg:var(--neon-lime);font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px;color:#000;cursor:pointer;background:var(--bg);border:none;padding:15px 26px;display:inline-flex;align-items:center;gap:10px;position:relative;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));box-shadow:7px 7px 0 0 var(--secondary-container);transition:transform .08s,box-shadow .08s,background .1s}
+
+.btn-upload{
+  --bg:var(--neon-lime);
+  font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;font-size:14px;color:#000;cursor:pointer;
+  background:var(--bg);border:none;padding:15px 26px;
+  display:inline-flex;align-items:center;gap:10px;position:relative;
+  clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  box-shadow:7px 7px 0 0 var(--secondary-container);
+  transition:transform .08s, box-shadow .08s, background .1s;
+}
 .btn-upload:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 0 var(--secondary-container)}
 .btn-upload:active{transform:translate(3px,3px);box-shadow:2px 2px 0 0 var(--secondary-container)}
 .btn-upload:focus-visible{outline:3px solid var(--glitch-white);outline-offset:3px}
@@ -146,32 +254,64 @@ header{position:relative;z-index:2;padding-top:28px;padding-bottom:18px}
 .panel.active{display:block}
 @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* [V3] ドロップ中のパネルスタイル */
-.panel.drag-over{outline:2px dashed var(--outline-variant);outline-offset:-4px}
-.panel.drag-over .empty{border-color:var(--secondary-container);background:rgba(0,238,252,.06)}
-
 /* empty state */
-.empty{border:2px dashed var(--outline-variant);background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(186,107,255,.04) 12px,rgba(186,107,255,.04) 24px);padding:48px 24px;text-align:center;color:var(--outline);transition:border-color .15s,background .15s}
+.empty{
+  border:2px dashed var(--outline-variant);
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(186,107,255,.04) 12px, rgba(186,107,255,.04) 24px);
+  padding:48px 24px;text-align:center;color:var(--outline);
+  transition:border-color .15s, background .15s;
+}
+.empty.drag{border-color:var(--secondary-container);background:rgba(0,238,252,.06)}
 .empty h3{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:.04em;color:var(--on-surface-variant);text-transform:uppercase;margin-bottom:8px}
 
 /* =========================================================
    PYTHON PANEL ― project / folder list
    ========================================================= */
-.project{background:var(--surface-container-low);border:2px solid var(--glitch-white);margin-bottom:20px;position:relative;box-shadow:6px 6px 0 0 rgba(0,0,0,.6)}
-.project-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface-container-high);border-bottom:2px solid var(--outline-variant);padding:12px 16px}
-.folder-tab{background:var(--tertiary-container);color:var(--deep-void);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;clip-path:polygon(0 0,100% 0,100% 100%,8px 100%,0 calc(100% - 8px))}
+.project{
+  background:var(--surface-container-low);
+  border:2px solid var(--glitch-white);
+  margin-bottom:20px;position:relative;
+  box-shadow:6px 6px 0 0 rgba(0,0,0,.6);
+}
+.project-head{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:var(--surface-container-high);
+  border-bottom:2px solid var(--outline-variant);
+  padding:12px 16px;
+}
+.folder-tab{
+  background:var(--tertiary-container);color:var(--deep-void);
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;
+  letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;
+  clip-path:polygon(0 0,100% 0,100% 100%,8px 100%,0 calc(100% - 8px));
+}
 .project-name{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:.03em;color:var(--glitch-white);text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .project-meta{color:var(--outline);font-size:12px}
+
 .desc-row{padding:14px 16px;border-bottom:1px dashed var(--outline-variant)}
 .desc-row label{display:block;color:var(--secondary-container);margin-bottom:6px}
-.desc-input{width:100%;background:var(--surface-container-lowest);color:var(--on-surface);border:none;border-bottom:2px solid var(--outline-variant);font-family:'Space Grotesk',sans-serif;font-size:15px;padding:8px 4px;transition:border-color .15s}
+.desc-input{
+  width:100%;background:var(--surface-container-lowest);color:var(--on-surface);
+  border:none;border-bottom:2px solid var(--outline-variant);
+  font-family:'Space Grotesk',sans-serif;font-size:15px;padding:8px 4px;
+  transition:border-color .15s;
+}
 .desc-input::placeholder{color:var(--outline-variant)}
 .desc-input:focus{outline:none;border-bottom-color:var(--primary);animation:focusPulse 1.4s infinite}
 @keyframes focusPulse{0%,100%{border-bottom-color:var(--primary)}50%{border-bottom-color:var(--secondary-container)}}
+
 .filetree{padding:8px 0 12px;max-height:280px;overflow:auto}
-.file-item{display:flex;align-items:center;gap:10px;padding:6px 16px;border-left:3px solid transparent;font-size:14px;position:relative}
+.file-item{
+  display:flex;align-items:center;gap:10px;padding:6px 16px;
+  border-left:3px solid transparent;font-size:14px;
+  position:relative;
+}
 .file-item:hover{background:rgba(255,75,137,.08);border-left-color:var(--primary)}
-.file-item .ext{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:10px;letter-spacing:.05em;background:#000;padding:2px 6px;min-width:46px;text-align:center}
+.file-item .ext{
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:10px;
+  letter-spacing:.05em;background:#000;padding:2px 6px;min-width:46px;text-align:center;
+}
 .file-item .ext.py{color:var(--neon-lime)}
 .file-item .ext.cfg{color:var(--electric-yellow)}
 .file-item .ext.dat{color:var(--secondary-container)}
@@ -179,66 +319,117 @@ header{position:relative;z-index:2;padding-top:28px;padding-bottom:18px}
 .file-item .path{font-family:'JetBrains Mono',monospace;color:var(--on-surface-variant);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .file-item .indent{color:var(--outline-variant)}
 .file-item .size{margin-left:auto;color:var(--outline);font-size:11px;font-family:'JetBrains Mono',monospace;white-space:nowrap}
+
+/* row of action buttons under a project/design card */
 .row-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 16px;border-top:1px dashed var(--outline-variant)}
-.badge{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;background:#000}
+.badge{
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;padding:4px 9px;background:#000;
+}
 .badge.synced{color:var(--neon-lime)}
 .badge.pending{color:var(--electric-yellow)}
 
 /* =========================================================
-   DESIGN.md PANEL ― list + preview  [V3: 画像なし・シングルカラム]
+   DESIGN.md PANEL ― list + preview
    ========================================================= */
 .design-list{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px}
 @media(min-width:700px){.design-list{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}}
-.design-card{background:var(--surface-container-low);border:2px solid var(--glitch-white);box-shadow:5px 5px 0 0 rgba(0,0,0,.6);padding:16px;display:flex;flex-direction:column;gap:8px}
+.design-card{
+  background:var(--surface-container-low);border:2px solid var(--glitch-white);
+  box-shadow:5px 5px 0 0 rgba(0,0,0,.6);padding:16px;display:flex;flex-direction:column;gap:8px;
+}
 .design-card .dc-name{font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;color:var(--glitch-white);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* [V3] フォルダ名（内部キー）をサブテキストで表示 */
-.design-card .dc-sub{color:var(--outline-variant);font-size:10px;font-family:'JetBrains Mono',monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:-4px}
 .design-card .dc-desc{color:var(--on-surface-variant);font-size:13px;min-height:18px}
 .design-card .dc-meta{color:var(--outline);font-size:11px;font-family:'JetBrains Mono',monospace}
 .design-card .dc-actions{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
 .design-card.active{border-color:var(--secondary-container);box-shadow:5px 5px 0 0 var(--primary-container)}
 
-/* [V3] シングルカラムプレビュー（画像ギャラリー削除） */
-.dm-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:860px}
+.dm-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:920px){.dm-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}}
 
-.card{background:var(--surface-container-low);border:2px solid var(--glitch-white);position:relative;box-shadow:6px 6px 0 0 rgba(0,0,0,.6)}
-.card-tab{position:absolute;top:-2px;left:18px;transform:translateY(-100%);background:var(--secondary-container);color:var(--deep-void);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px 6px;clip-path:polygon(0 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.card{
+  background:var(--surface-container-low);
+  border:2px solid var(--glitch-white);
+  position:relative;box-shadow:6px 6px 0 0 rgba(0,0,0,.6);
+}
+.card-tab{
+  position:absolute;top:-2px;left:18px;transform:translateY(-100%);
+  background:var(--secondary-container);color:var(--deep-void);
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;padding:5px 12px 6px;
+  clip-path:polygon(0 0,100% 0,calc(100% - 8px) 100%,0 100%);
+}
 .card.pink{border-color:var(--primary)}
 .card.pink .card-tab{background:var(--primary-container)}
 .card-body{padding:22px 18px 20px}
 .dm-name{font-family:'Anton',sans-serif;font-size:34px;letter-spacing:.03em;text-transform:uppercase;color:var(--glitch-white);line-height:.95;margin-bottom:4px}
 .dm-name .sp{color:var(--primary)}
 .dm-sub{color:var(--outline);margin-bottom:18px}
+
 .sec-label{display:flex;align-items:center;gap:10px;margin:22px 0 12px}
 .sec-label span{color:var(--secondary-container)}
 .sec-label .rule{flex:1;height:1px;background:repeating-linear-gradient(to right,var(--outline-variant) 0 6px,transparent 6px 12px)}
+
 .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
 .swatch{border:1px solid #000;cursor:default}
 .swatch .chip{height:46px;border-bottom:1px solid rgba(0,0,0,.4)}
 .swatch .meta{background:#000;padding:5px 6px}
 .swatch .k{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--on-surface);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .swatch .v{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--outline)}
+
 .typo-row{padding:10px 0;border-bottom:1px dashed var(--outline-variant)}
 .typo-row .tk{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--secondary-container);letter-spacing:.06em;display:block;margin-bottom:4px}
 .typo-row .sample{color:var(--glitch-white);line-height:1.1}
 .typo-row .spec{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--outline)}
+
 .kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--outline-variant);font-family:'JetBrains Mono',monospace;font-size:13px}
 .kv .kk{color:var(--on-surface-variant)}
 .kv .vv{color:var(--neon-lime)}
+
+/* image gallery */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.shot{position:relative;border:2px solid var(--glitch-white);background:#000;aspect-ratio:4/3;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.1)}
+.shot .cap{position:absolute;left:0;bottom:0;right:0;background:rgba(0,0,0,.7);color:var(--secondary);font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gallery .gempty{grid-column:1/-1;color:var(--outline-variant);font-family:'JetBrains Mono',monospace;font-size:12px;border:2px dashed var(--outline-variant);padding:18px;text-align:center}
+
 .raw-toggle{margin-top:18px}
 .raw-toggle summary{cursor:pointer;color:var(--tertiary);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;list-style:none}
 .raw-toggle summary::-webkit-details-marker{display:none}
 .raw-toggle summary::before{content:"▸ ";color:var(--primary)}
 .raw-toggle[open] summary::before{content:"▾ "}
 .raw-pre{margin-top:10px;max-height:300px;overflow:auto;background:var(--surface-container-lowest);border:1px solid var(--outline-variant);padding:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--on-surface-variant);white-space:pre-wrap;word-break:break-word}
+.raw-edit{margin-top:10px;width:100%;min-height:220px;background:var(--surface-container-lowest);color:var(--on-surface);border:1px solid var(--outline-variant);padding:14px;font-family:'JetBrains Mono',monospace;font-size:12px;resize:vertical}
+.raw-edit:focus{outline:none;border-color:var(--primary)}
+
+/* edit-mode helpers (design & python cards) */
+.shot{position:relative}
+.shot .rm{position:absolute;top:4px;right:4px;width:20px;height:20px;border:none;background:var(--error-container);color:var(--glitch-white);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;line-height:1;cursor:pointer;z-index:2}
+.shot.marked-remove{opacity:.35}
+.shot.marked-remove::after{content:"REMOVE";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(147,0,10,.55);color:#fff;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.05em;z-index:1}
+.file-item .rm-file{margin-left:auto;width:18px;height:18px;flex:none;border:none;background:var(--error-container);color:var(--glitch-white);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;line-height:1;cursor:pointer}
+.file-item.marked-remove{opacity:.4;text-decoration:line-through}
+.file-item.new-file .ext{background:var(--neon-lime);color:#000}
+.title-input{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:.03em;text-transform:uppercase;background:var(--surface-container-lowest);color:var(--glitch-white);border:none;border-bottom:2px solid var(--secondary-container);padding:6px 4px;width:100%}
+.title-input:focus{outline:none;border-bottom-color:var(--primary)}
 
 /* =========================================================
    FOOTER
    ========================================================= */
 footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-variant);color:var(--outline);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* hidden file inputs */
 .hidden-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+
+/* slanted divider accent under header */
 .slant-rule{height:6px;background:var(--primary-container);transform:skewY(calc(-1 * var(--slant)));transform-origin:left;margin:18px 0 4px;box-shadow:0 4px 0 0 var(--secondary-container)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+
+/* mobile tuning */
 @media(max-width:520px){
   .context-label .ctx-mode{font-size:21px}
   .btn-upload{width:100%;justify-content:center}
@@ -260,18 +451,22 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
       <div class="hud-chip"><span class="caps" id="clock">--:--:--</span></div>
     </div>
 
-    <!-- SVG GLITCH LOGO -->
+    <!-- SVG GLITCH LOGO: Anywhere.file -->
     <div class="logo-stage" aria-label="Anywhere.file">
       <svg viewBox="0 0 760 130" role="img" aria-labelledby="logoTitle">
         <title id="logoTitle">Anywhere.file</title>
         <defs>
           <style>
             .lt{font-family:'Anton',sans-serif;font-size:96px;letter-spacing:-2px}
+            .dotfile{font-family:'Anton',sans-serif;font-size:96px}
           </style>
         </defs>
+        <!-- chromatic aberration layers -->
         <text class="lt glitch-layer layer-cyan" x="6" y="96" fill="#00eefc" opacity="0.85">Anywhere<tspan fill="#00eefc">.file</tspan></text>
         <text class="lt glitch-layer layer-pink" x="6" y="96" fill="#ff4b89" opacity="0.85">Anywhere<tspan fill="#ff4b89">.file</tspan></text>
+        <!-- main layer -->
         <text class="lt" x="6" y="96" fill="#F0F0F0">Anywhere<tspan fill="#ffb1c3">.file</tspan></text>
+        <!-- scan slice accent -->
         <rect x="0" y="40" width="760" height="3" fill="#CCFF00" opacity="0.5"/>
       </svg>
     </div>
@@ -283,10 +478,22 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
       <div class="settings" id="settingsPanel">
         <h3>SETTINGS</h3>
         <div class="settings-grid">
-          <div class="field"><label class="caps">Owner</label><input type="text" id="cfgOwner" placeholder="e.g. your-username" autocomplete="off"></div>
-          <div class="field"><label class="caps">Repo</label><input type="text" id="cfgRepo" placeholder="anywhere-file-data" autocomplete="off"></div>
-          <div class="field"><label class="caps">Branch</label><input type="text" id="cfgBranch" placeholder="main" autocomplete="off"></div>
-          <div class="field"><label class="caps">Token</label><input type="password" id="cfgToken" placeholder="github_pat_..." autocomplete="off"></div>
+          <div class="field">
+            <label class="caps">Owner</label>
+            <input type="text" id="cfgOwner" placeholder="e.g. your-username" autocomplete="off">
+          </div>
+          <div class="field">
+            <label class="caps">Repo</label>
+            <input type="text" id="cfgRepo" placeholder="anywhere-file-data" autocomplete="off">
+          </div>
+          <div class="field">
+            <label class="caps">Branch</label>
+            <input type="text" id="cfgBranch" placeholder="main" autocomplete="off">
+          </div>
+          <div class="field">
+            <label class="caps">Token</label>
+            <input type="password" id="cfgToken" placeholder="github_pat_..." autocomplete="off">
+          </div>
         </div>
         <div class="settings-actions">
           <button class="btn-sm primary" id="cfgSave" type="button">SAVE &amp; CONNECT</button>
@@ -298,6 +505,18 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
 
     <!-- ============ STATUS BANNER ============ -->
     <div class="banner" id="banner"><span class="msg" id="bannerMsg"></span><span class="close" id="bannerClose">✕</span></div>
+
+    <!-- ============ DANGER CONFIRM MODAL (delete) ============ -->
+    <div class="settings-overlay danger-overlay" id="dangerOverlay">
+      <div class="settings danger" id="dangerModal">
+        <h3>⚠ DELETE CONFIRMATION</h3>
+        <p class="mono" id="dangerMsg" style="color:var(--on-surface-variant);line-height:1.6;margin-bottom:4px"></p>
+        <div class="settings-actions">
+          <button class="btn-sm danger" id="dangerConfirmBtn" type="button">DELETE FOR GOOD</button>
+          <button class="btn-sm" id="dangerCancelBtn" type="button">CANCEL</button>
+        </div>
+      </div>
+    </div>
   </header>
 
   <!-- ============ TABS ============ -->
@@ -319,8 +538,7 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
 
   <!-- hidden inputs -->
   <input type="file" id="folderInput" class="hidden-input" webkitdirectory directory multiple>
-  <!-- [V3] image/* 削除・single file -->
-  <input type="file" id="mdInput" class="hidden-input" accept=".md,.markdown,text/markdown">
+  <input type="file" id="mdInput" class="hidden-input" accept=".md,.markdown,text/markdown,image/*" multiple>
 
   <!-- ============ PYTHON PANEL ============ -->
   <section class="panel active" id="panel-python" role="tabpanel" aria-labelledby="tab-python">
@@ -335,17 +553,21 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
   <section class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design">
     <div class="empty" id="dmEmpty">
       <h3>NO DESIGN LOADED</h3>
-      <!-- [V3] 画像の記載を削除・フォルダドロップOKに変更 -->
-      <p class="mono"><b>DESIGN.md</b> をドラッグ＆ドロップ（フォルダごとでもOK）、または上の <b>UPLOAD .md</b> を押してアップロード。frontmatter を解析してプレビュー表示します。</p>
+      <p class="mono"><b>DESIGN.md</b> をアップロードすると frontmatter を解析してプレビュー表示。画像を添えるとデザインサンプルも並びます。</p>
     </div>
 
     <div id="designList" class="design-list"></div>
+
+    <div class="desc-row" id="dmTitleRow" style="display:none">
+      <label class="caps">TITLE // 何のDESIGN.mdか一言で識別</label>
+      <input class="desc-input" type="text" id="dmTitleInput" placeholder="例）Vivit Cyber-Pop ダッシュボードテーマ">
+    </div>
 
     <div class="desc-row" id="dmDescRow" style="display:none">
       <label class="caps">WHAT IT DOES // 一言説明</label>
       <input class="desc-input" type="text" id="dmDescInput" placeholder="例）Vivit Cyber-Pop ダッシュボードテーマ">
       <div class="row-actions" style="padding-left:0;border-top:none">
-        <button class="btn-sm primary" id="dmDescSave" type="button">SAVE DESC</button>
+        <button class="btn-sm primary" id="dmDescSave" type="button">SAVE TITLE / DESC</button>
       </div>
     </div>
 
@@ -355,23 +577,39 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
       <button class="btn-sm danger" id="dmCancelBtn" type="button">CANCEL</button>
     </div>
 
-    <!-- [V3] ギャラリーカード削除・シングルカラム -->
     <div class="dm-grid" id="dmView" style="display:none">
+      <!-- left: parsed preview -->
       <div class="card pink">
         <div class="card-tab">DESIGN.md // PARSED</div>
         <div class="card-body">
           <div class="dm-name" id="dmName">UNTITLED<span class="sp">_SYSTEM</span></div>
           <div class="dm-sub mono" id="dmFile">―</div>
+
           <div class="sec-label caps"><span>COLORS</span><span class="rule"></span></div>
           <div class="swatches" id="dmColors"></div>
+
           <div class="sec-label caps"><span>TYPOGRAPHY</span><span class="rule"></span></div>
           <div id="dmTypo"></div>
+
           <div class="sec-label caps"><span>SPACING</span><span class="rule"></span></div>
           <div id="dmSpacing"></div>
-          <details class="raw-toggle">
-            <summary>VIEW RAW SOURCE</summary>
-            <pre class="raw-pre" id="dmRaw"></pre>
+
+          <details class="raw-toggle" open>
+            <summary>MD SOURCE（COMMIT/EDIT中は編集可）</summary>
+            <textarea class="raw-edit" id="dmRawEdit" spellcheck="false" readonly></textarea>
           </details>
+        </div>
+      </div>
+      <!-- right: image gallery -->
+      <div class="card">
+        <div class="card-tab">DESIGN SAMPLES // IMG</div>
+        <div class="card-body">
+          <div class="sec-label caps"><span>PREVIEW GALLERY</span><span class="rule"></span></div>
+          <button class="btn-sm" id="dmAddImgBtn" type="button" style="display:none;margin-bottom:10px">+ ADD IMAGE</button>
+          <input type="file" id="dmAddImgInput" class="hidden-input" accept="image/*" multiple>
+          <div class="gallery" id="dmGallery">
+            <div class="gempty">画像未登録 ― DESIGN.md と一緒に画像を投入してください</div>
+          </div>
         </div>
       </div>
     </div>
@@ -379,7 +617,7 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
 
   <!-- ============ FOOTER ============ -->
   <footer>
-    <span class="caps">ANYWHERE.FILE // v3</span>
+    <span class="caps">ANYWHERE.FILE</span>
     <span class="mono" style="font-size:11px">GITHUB SYNC BUILD ― private リポジトリと直接連携</span>
   </footer>
 
@@ -390,53 +628,79 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
    UTILITIES
    ========================================================= */
 function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 function fmtDate(iso){
   if(!iso) return '―';
   try{ const d=new Date(iso); if(isNaN(d.getTime())) return '―'; return d.toLocaleString('ja-JP',{hour12:false}); }catch(_){ return '―'; }
 }
 function fmtSize(b){
-  b=b||0;
+  b = b||0;
   if(b<1024) return b+' B';
   if(b<1048576) return (b/1024).toFixed(1)+' KB';
   return (b/1048576).toFixed(1)+' MB';
 }
 function extClass(name){
-  const n=name.toLowerCase();
+  const n = name.toLowerCase();
   if(n.endsWith('.py')) return 'py';
   if(n.match(/\.(cfg|ini|toml|yml|yaml|json|env|txt|md)$/)) return 'cfg';
   if(n.match(/\.(csv|tsv|xlsx|db|sqlite|parquet|pkl|npy)$/)) return 'dat';
   return 'gen';
 }
 function extLabel(name){
-  const m=name.toLowerCase().match(/\.([a-z0-9]+)$/);
+  const m = name.toLowerCase().match(/\.([a-z0-9]+)$/);
   return m ? m[1].slice(0,4).toUpperCase() : 'DIR';
 }
 function fileToBase64(file){
   return new Promise((resolve,reject)=>{
-    const r=new FileReader();
-    r.onload=()=>resolve(String(r.result).split(',')[1]);
-    r.onerror=reject;
+    const r = new FileReader();
+    r.onload = ()=>resolve(String(r.result).split(',')[1]);
+    r.onerror = reject;
     r.readAsDataURL(file);
   });
 }
 function utf8ToB64(str){ return btoa(unescape(encodeURIComponent(str))); }
 function b64ToUtf8(b64){ return decodeURIComponent(escape(atob(String(b64).replace(/\n/g,'')))); }
+function mimeForPath(path){
+  const ext = (path.split('.').pop()||'').toLowerCase();
+  return {png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',gif:'image/gif',webp:'image/webp',svg:'image/svg+xml',bmp:'image/bmp'}[ext] || 'application/octet-stream';
+}
+/* slug（フォルダ実体のID）とtitle（画面表示名）を分離するためのヘルパー。
+   これにより「同じファイル名（例:DESIGN.md）を何度アップロードしても
+   別プロジェクトとして扱われ、既存データを上書きしない」を保証する。 */
+function slugify(s){
+  const base = String(s||'').toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu,'-')
+    .replace(/^-+|-+$/g,'')
+    .slice(0,48);
+  return base || 'untitled';
+}
+function uniqueSlug(base, existingIds){
+  let id = slugify(base);
+  if(!existingIds.includes(id)) return id;
+  let n = 2;
+  while(existingIds.includes(`${id}-${n}`)) n++;
+  return `${id}-${n}`;
+}
 
 /* =========================================================
    CONFIG / STORAGE
    ========================================================= */
-const CFG_KEY='af_config_v1';
-const TOKEN_KEY='af_token_v1';
-const MANIFEST_PATH='manifest.json';
+const CFG_KEY = 'af_config_v1';
+const TOKEN_KEY = 'af_token_v1';
+const MANIFEST_PATH = 'manifest.json';
 
-function getConfig(){ try{ return JSON.parse(localStorage.getItem(CFG_KEY))||{}; }catch(_){ return {}; } }
-function saveConfig(cfg){ localStorage.setItem(CFG_KEY,JSON.stringify(cfg)); }
-function getToken(){ return sessionStorage.getItem(TOKEN_KEY)||''; }
-function saveToken(t){ if(t) sessionStorage.setItem(TOKEN_KEY,t); else sessionStorage.removeItem(TOKEN_KEY); }
-function isConfigured(){ const c=getConfig(); return !!(c.owner&&c.repo&&getToken()); }
-function branchName(){ return getConfig().branch||'main'; }
+function getConfig(){
+  try{ return JSON.parse(localStorage.getItem(CFG_KEY)) || {}; }catch(_){ return {}; }
+}
+function saveConfig(cfg){ localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }
+function getToken(){ return sessionStorage.getItem(TOKEN_KEY) || ''; }
+function saveToken(t){ if(t) sessionStorage.setItem(TOKEN_KEY, t); else sessionStorage.removeItem(TOKEN_KEY); }
+function isConfigured(){
+  const c = getConfig();
+  return !!(c.owner && c.repo && getToken());
+}
+function branchName(){ return getConfig().branch || 'main'; }
 
 /* =========================================================
    GITHUB API CORE
@@ -444,12 +708,13 @@ function branchName(){ return getConfig().branch||'main'; }
 function encPath(p){ return p.split('/').map(encodeURIComponent).join('/'); }
 function repoPath(p){ const c=getConfig(); return `/repos/${c.owner}/${c.repo}${p}`; }
 
-async function ghFetch(path,options={}){
-  const cfg=getConfig(), token=getToken();
-  if(!cfg.owner||!cfg.repo) throw new Error('Owner / Repoが未設定です。CONFIGから設定してください。');
+async function ghFetch(path, options={}){
+  const cfg = getConfig();
+  const token = getToken();
+  if(!cfg.owner || !cfg.repo) throw new Error('Owner / Repoが未設定です。CONFIGから設定してください。');
   if(!token) throw new Error('Tokenが未設定です。CONFIGから設定してください。');
-  const url=path.startsWith('http')?path:`https://api.github.com${path}`;
-  const res=await fetch(url,{
+  const url = path.startsWith('http') ? path : `https://api.github.com${path}`;
+  const res = await fetch(url, {
     ...options,
     headers:{
       'Authorization':`Bearer ${token}`,
@@ -461,8 +726,8 @@ async function ghFetch(path,options={}){
   if(!res.ok){
     let detail='';
     try{ const j=await res.json(); detail=j.message||''; }catch(_){}
-    const err=new Error(`GitHub API ${res.status}${detail?': '+detail:''} (${path})`);
-    err.status=res.status;
+    const err = new Error(`GitHub API ${res.status}${detail?': '+detail:''} (${path})`);
+    err.status = res.status;
     throw err;
   }
   if(res.status===204) return null;
@@ -470,78 +735,125 @@ async function ghFetch(path,options={}){
 }
 
 async function ghGetContent(path){
-  try{ return await ghFetch(repoPath(`/contents/${encPath(path)}?ref=${encodeURIComponent(branchName())}`)); }
-  catch(e){ if(e.status===404) return null; throw e; }
+  try{
+    return await ghFetch(repoPath(`/contents/${encPath(path)}?ref=${encodeURIComponent(branchName())}`));
+  }catch(e){
+    if(e.status===404) return null;
+    throw e;
+  }
 }
-async function ghPutContent(path,contentB64,message,sha=null){
-  const body={message,content:contentB64,branch:branchName()};
-  if(sha) body.sha=sha;
-  return ghFetch(repoPath(`/contents/${encPath(path)}`),{method:'PUT',body:JSON.stringify(body)});
+async function ghPutContent(path, contentB64, message, sha=null){
+  const body = {message, content:contentB64, branch:branchName()};
+  if(sha) body.sha = sha;
+  return ghFetch(repoPath(`/contents/${encPath(path)}`), {method:'PUT', body:JSON.stringify(body)});
 }
-async function ghGetRef(){ return ghFetch(repoPath(`/git/ref/${encodeURIComponent('heads/'+branchName())}`)); }
-async function ghGetCommit(sha){ return ghFetch(repoPath(`/git/commits/${sha}`)); }
-async function ghGetTree(sha,recursive){ return ghFetch(repoPath(`/git/trees/${sha}${recursive?'?recursive=1':''}`)); }
-async function ghGetBlob(sha){ return ghFetch(repoPath(`/git/blobs/${sha}`)); }
-async function ghCreateBlob(contentB64){ return ghFetch(repoPath('/git/blobs'),{method:'POST',body:JSON.stringify({content:contentB64,encoding:'base64'})}); }
-async function ghCreateTree(baseTreeSha,tree){ return ghFetch(repoPath('/git/trees'),{method:'POST',body:JSON.stringify({base_tree:baseTreeSha,tree})}); }
-async function ghCreateCommit(message,treeSha,parentSha){ return ghFetch(repoPath('/git/commits'),{method:'POST',body:JSON.stringify({message,tree:treeSha,parents:[parentSha]})}); }
-async function ghUpdateRef(sha){ return ghFetch(repoPath(`/git/refs/${encodeURIComponent('heads/'+branchName())}`),{method:'PATCH',body:JSON.stringify({sha,force:false})}); }
+async function ghGetRef(){
+  return ghFetch(repoPath(`/git/ref/${encodeURIComponent('heads/'+branchName())}`));
+}
+async function ghGetCommit(sha){
+  return ghFetch(repoPath(`/git/commits/${sha}`));
+}
+async function ghGetTree(sha, recursive){
+  return ghFetch(repoPath(`/git/trees/${sha}${recursive?'?recursive=1':''}`));
+}
+async function ghGetBlob(sha){
+  return ghFetch(repoPath(`/git/blobs/${sha}`));
+}
+async function ghCreateBlob(contentB64){
+  return ghFetch(repoPath('/git/blobs'), {method:'POST', body:JSON.stringify({content:contentB64, encoding:'base64'})});
+}
+async function ghCreateTree(baseTreeSha, tree){
+  return ghFetch(repoPath('/git/trees'), {method:'POST', body:JSON.stringify({base_tree:baseTreeSha, tree})});
+}
+async function ghCreateCommit(message, treeSha, parentSha){
+  return ghFetch(repoPath('/git/commits'), {method:'POST', body:JSON.stringify({message, tree:treeSha, parents:[parentSha]})});
+}
+async function ghUpdateRef(sha){
+  return ghFetch(repoPath(`/git/refs/${encodeURIComponent('heads/'+branchName())}`), {method:'PATCH', body:JSON.stringify({sha, force:false})});
+}
 
 /* =========================================================
-   ROOT TREE CACHE
+   ROOT TREE CACHE (for file listings, sha lookup, deletions)
    ========================================================= */
-let rootTreeCache=null;
+let rootTreeCache = null;
 async function getRootTree(force){
-  if(rootTreeCache&&!force) return rootTreeCache;
+  if(rootTreeCache && !force) return rootTreeCache;
   let ref;
-  try{ ref=await ghGetRef(); }catch(e){
-    if(e.status===409||/empty/i.test(e.message)){
-      rootTreeCache={tree:[],commitSha:null,treeSha:null,empty:true};
+  try{
+    ref = await ghGetRef();
+  }catch(e){
+    if(e.status===409 || /empty/i.test(e.message)){
+      rootTreeCache = {tree:[], commitSha:null, treeSha:null, empty:true};
       return rootTreeCache;
     }
     throw e;
   }
-  const commit=await ghGetCommit(ref.object.sha);
-  const tree=await ghGetTree(commit.tree.sha,true);
-  rootTreeCache={tree:tree.tree||[],commitSha:ref.object.sha,treeSha:commit.tree.sha,truncated:!!tree.truncated,empty:false};
+  const commit = await ghGetCommit(ref.object.sha);
+  const tree = await ghGetTree(commit.tree.sha, true);
+  rootTreeCache = {tree:tree.tree||[], commitSha:ref.object.sha, treeSha:commit.tree.sha, truncated:!!tree.truncated, empty:false};
   return rootTreeCache;
 }
-function invalidateRootTree(){ rootTreeCache=null; }
-async function findTreeSha(path){ const root=await getRootTree(); const item=root.tree.find(t=>t.path===path); return item?item.sha:null; }
-async function fetchBlobBase64(path){ const sha=await findTreeSha(path); if(!sha) return null; const blob=await ghGetBlob(sha); return blob.content.replace(/\n/g,''); }
+function invalidateRootTree(){ rootTreeCache = null; }
+async function findTreeSha(path){
+  const root = await getRootTree();
+  const item = root.tree.find(t=>t.path===path);
+  return item ? item.sha : null;
+}
+async function fetchBlobBase64(path){
+  const sha = await findTreeSha(path);
+  if(!sha) return null;
+  const blob = await ghGetBlob(sha);
+  return blob.content.replace(/\n/g,'');
+}
 
 /* =========================================================
    MANIFEST
    ========================================================= */
-function emptyManifest(){ return {updated:'',python:[],design:[]}; }
+function emptyManifest(){ return {updated:'', python:[], design:[]}; }
 async function loadManifest(){
-  const res=await ghGetContent(MANIFEST_PATH);
-  if(!res) return {data:emptyManifest(),sha:null};
+  const res = await ghGetContent(MANIFEST_PATH);
+  if(!res) return {data:emptyManifest(), sha:null};
   let data;
-  try{ data=JSON.parse(b64ToUtf8(res.content)); }catch(_){ data=emptyManifest(); }
+  try{ data = JSON.parse(b64ToUtf8(res.content)); }catch(_){ data = emptyManifest(); }
   if(!Array.isArray(data.python)) data.python=[];
   if(!Array.isArray(data.design)) data.design=[];
-  return {data,sha:res.sha};
+  return {data, sha:res.sha};
 }
-async function saveManifest(data,sha,message){
-  data.updated=new Date().toISOString();
-  const b64=utf8ToB64(JSON.stringify(data,null,2));
-  const res=await ghPutContent(MANIFEST_PATH,b64,message,sha);
+async function saveManifest(data, sha, message){
+  data.updated = new Date().toISOString();
+  const b64 = utf8ToB64(JSON.stringify(data, null, 2));
+  const res = await ghPutContent(MANIFEST_PATH, b64, message, sha);
   invalidateRootTree();
   return res.content.sha;
 }
 
 /* =========================================================
-   DELETE FOLDER (via Git Data API)
+   DELETE FOLDER (via Git Data API ― single commit)
    ========================================================= */
-async function deleteFolder(prefix,message){
-  const root=await getRootTree(true);
+async function deleteFolder(prefix, message){
+  const root = await getRootTree(true);
   if(root.empty) return;
-  const targets=root.tree.filter(t=>t.path.startsWith(prefix)&&t.type==='blob');
+  const targets = root.tree.filter(t=>t.path.startsWith(prefix) && t.type==='blob');
   if(!targets.length) return;
-  const entries=targets.map(t=>({path:t.path,mode:t.mode,type:'blob',sha:null}));
-  const newTree=await ghCreateTree(root.treeSha,entries);
-  const newCommit=await ghCreateCommit(message,newTree.sha,root.commitSha);
+  const entries = targets.map(t=>({path:t.path, mode:t.mode, type:'blob', sha:null}));
+  const newTree = await ghCreateTree(root.treeSha, entries);
+  const newCommit = await ghCreateCommit(message, newTree.sha, root.commitSha);
+  await ghUpdateRef(newCommit.sha);
+  invalidateRootTree();
+}
+
+/* 個別ファイル（パス指定）だけを1コミットで削除する版。編集画面での
+   「画像を外す」「ファイルを外す」に使う（フォルダ全体は消さない）。 */
+async function deletePaths(paths, message){
+  if(!paths || !paths.length) return;
+  const root = await getRootTree(true);
+  if(root.empty) return;
+  const set = new Set(paths);
+  const targets = root.tree.filter(t=>set.has(t.path) && t.type==='blob');
+  if(!targets.length) return;
+  const entries = targets.map(t=>({path:t.path, mode:t.mode, type:'blob', sha:null}));
+  const newTree = await ghCreateTree(root.treeSha, entries);
+  const newCommit = await ghCreateCommit(message, newTree.sha, root.commitSha);
   await ghUpdateRef(newCommit.sha);
   invalidateRootTree();
 }
@@ -549,79 +861,116 @@ async function deleteFolder(prefix,message){
 /* =========================================================
    UI: BANNER / STATUS
    ========================================================= */
-function showBanner(msg,type){
-  const b=document.getElementById('banner');
-  document.getElementById('bannerMsg').textContent=msg;
-  b.className='banner show '+(type||'info');
+function showBanner(msg, type){
+  const b = document.getElementById('banner');
+  document.getElementById('bannerMsg').textContent = msg;
+  b.className = 'banner show '+(type||'info');
 }
-function hideBanner(){ document.getElementById('banner').className='banner'; }
-document.getElementById('bannerClose').addEventListener('click',hideBanner);
+function hideBanner(){
+  document.getElementById('banner').className = 'banner';
+}
+document.getElementById('bannerClose').addEventListener('click', hideBanner);
+
+/* =========================================================
+   DANGER CONFIRM（削除専用の警告モーダル。ネイティブconfirm()の代わり）
+   ========================================================= */
+function dangerConfirm(message){
+  return new Promise(resolve=>{
+    const overlay = document.getElementById('dangerOverlay');
+    document.getElementById('dangerMsg').textContent = message;
+    overlay.classList.add('open');
+    const confirmBtn = document.getElementById('dangerConfirmBtn');
+    const cancelBtn = document.getElementById('dangerCancelBtn');
+    const cleanup = (result)=>{
+      overlay.classList.remove('open');
+      confirmBtn.removeEventListener('click', onConfirm);
+      cancelBtn.removeEventListener('click', onCancel);
+      overlay.removeEventListener('click', onOverlay);
+      resolve(result);
+    };
+    const onConfirm = ()=>cleanup(true);
+    const onCancel = ()=>cleanup(false);
+    const onOverlay = (e)=>{ if(e.target===overlay) cleanup(false); };
+    confirmBtn.addEventListener('click', onConfirm);
+    cancelBtn.addEventListener('click', onCancel);
+    overlay.addEventListener('click', onOverlay);
+  });
+}
 
 function friendlyError(e){
-  if(/Git Repository is empty|409/.test(e.message)) return 'リポジトリが空です。GitHub上で最初のコミット（README追加など）を作成してから再試行してください。';
-  if(e.status===404) return `見つかりません（404）。Owner / Repo名 / Branch名 を確認してください。 (${e.message})`;
-  if(e.status===401) return '認証エラー（401）。トークンが無効か期限切れです。CONFIGから再設定してください。';
-  if(e.status===403) return '権限エラー（403）。トークンの権限を確認してください。';
+  if(/Git Repository is empty|409/.test(e.message)){
+    return 'リポジトリが空です。GitHub上で最初のコミット（README追加など）を作成してから再試行してください。';
+  }
+  if(e.status===404){
+    return `見つかりません（404）。Owner / Repo名 / Branch名 を確認してください。 (${e.message})`;
+  }
+  if(e.status===401){
+    return '認証エラー（401）。トークンが無効か期限切れです。CONFIGから再設定してください。';
+  }
+  if(e.status===403){
+    return '権限エラー（403）。トークンの権限を確認してください。';
+  }
   return e.message;
 }
 
 function setConnStatus(state){
-  const chip=document.getElementById('statusChip');
+  const chip = document.getElementById('statusChip');
   if(state==='unconfigured'){
     chip.className='hud-chip pink';
-    chip.innerHTML=`<span class="led" style="background:var(--error);box-shadow:0 0 8px var(--error)"></span><span class="caps">STATUS: NOT CONFIGURED</span>`;
+    chip.innerHTML = `<span class="led" style="background:var(--error);box-shadow:0 0 8px var(--error)"></span><span class="caps">STATUS: NOT CONFIGURED</span>`;
   }else if(state==='checking'){
     chip.className='hud-chip';
-    chip.innerHTML=`<span class="led" style="background:var(--electric-yellow);box-shadow:0 0 8px var(--electric-yellow)"></span><span class="caps">STATUS: CONNECTING...</span>`;
+    chip.innerHTML = `<span class="led" style="background:var(--electric-yellow);box-shadow:0 0 8px var(--electric-yellow)"></span><span class="caps">STATUS: CONNECTING...</span>`;
   }else if(state==='online'){
     chip.className='hud-chip cyan';
-    chip.innerHTML=`<span class="led"></span><span class="caps">STATUS: ONLINE</span>`;
+    chip.innerHTML = `<span class="led"></span><span class="caps">STATUS: ONLINE</span>`;
   }else{
     chip.className='hud-chip pink';
-    chip.innerHTML=`<span class="led" style="background:var(--error);box-shadow:0 0 8px var(--error)"></span><span class="caps">STATUS: ERROR</span>`;
+    chip.innerHTML = `<span class="led" style="background:var(--error);box-shadow:0 0 8px var(--error)"></span><span class="caps">STATUS: ERROR</span>`;
   }
 }
 
 /* =========================================================
-   CLOCK
+   CLOCK (HUD)
    ========================================================= */
 function tick(){
-  const d=new Date(); const p=n=>String(n).padStart(2,'0');
-  document.getElementById('clock').textContent=`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+  const d = new Date();
+  const p = n => String(n).padStart(2,'0');
+  document.getElementById('clock').textContent = `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
 }
 setInterval(tick,1000); tick();
 
 /* =========================================================
    SETTINGS PANEL
    ========================================================= */
-const cfgPanel=document.getElementById('settingsOverlay');
+const cfgPanel = document.getElementById('settingsOverlay');
 function loadConfigIntoForm(){
-  const c=getConfig();
-  document.getElementById('cfgOwner').value=c.owner||'';
-  document.getElementById('cfgRepo').value=c.repo||'anywhere-file-data';
-  document.getElementById('cfgBranch').value=c.branch||'main';
-  document.getElementById('cfgToken').value=getToken();
+  const c = getConfig();
+  document.getElementById('cfgOwner').value = c.owner||'';
+  document.getElementById('cfgRepo').value = c.repo||'anywhere-file-data';
+  document.getElementById('cfgBranch').value = c.branch||'main';
+  document.getElementById('cfgToken').value = getToken();
 }
-document.getElementById('cfgToggle').addEventListener('click',()=>{
+document.getElementById('cfgToggle').addEventListener('click', ()=>{
   cfgPanel.classList.toggle('open');
   if(cfgPanel.classList.contains('open')) loadConfigIntoForm();
 });
-document.getElementById('cfgClose').addEventListener('click',()=>cfgPanel.classList.remove('open'));
-cfgPanel.addEventListener('click',(e)=>{ if(e.target===cfgPanel) cfgPanel.classList.remove('open'); });
-document.getElementById('cfgClearToken').addEventListener('click',()=>{
+document.getElementById('cfgClose').addEventListener('click', ()=> cfgPanel.classList.remove('open'));
+cfgPanel.addEventListener('click', (e)=>{ if(e.target===cfgPanel) cfgPanel.classList.remove('open'); });
+document.getElementById('cfgClearToken').addEventListener('click', ()=>{
   saveToken('');
   document.getElementById('cfgToken').value='';
   showBanner('トークンを消去しました。再入力するまでGitHub APIは利用できません。','info');
-  setConnStatus(isConfigured()?'online':'unconfigured');
+  setConnStatus(isConfigured() ? 'online' : 'unconfigured');
 });
-document.getElementById('cfgSave').addEventListener('click',async()=>{
-  const owner=document.getElementById('cfgOwner').value.trim();
-  const repo=document.getElementById('cfgRepo').value.trim()||'anywhere-file-data';
-  const br=document.getElementById('cfgBranch').value.trim()||'main';
-  const token=document.getElementById('cfgToken').value.trim();
+document.getElementById('cfgSave').addEventListener('click', async ()=>{
+  const owner = document.getElementById('cfgOwner').value.trim();
+  const repo = document.getElementById('cfgRepo').value.trim() || 'anywhere-file-data';
+  const br = document.getElementById('cfgBranch').value.trim() || 'main';
+  const token = document.getElementById('cfgToken').value.trim();
   if(!owner){ showBanner('Ownerを入力してください。','error'); return; }
   if(!token){ showBanner('Tokenを入力してください。','error'); return; }
-  saveConfig({owner,repo,branch:br});
+  saveConfig({owner, repo, branch:br});
   saveToken(token);
   invalidateRootTree();
   cfgPanel.classList.remove('open');
@@ -631,7 +980,7 @@ document.getElementById('cfgSave').addEventListener('click',async()=>{
 /* =========================================================
    APP STATE / BOOT
    ========================================================= */
-let manifestState={data:emptyManifest(),sha:null};
+let manifestState = {data: emptyManifest(), sha:null};
 
 async function bootApp(){
   if(!isConfigured()){
@@ -645,8 +994,18 @@ async function bootApp(){
   }
   setConnStatus('checking');
   try{
-    const {data,sha}=await loadManifest();
-    manifestState={data,sha};
+    const {data, sha} = await loadManifest();
+    // 旧形式（id無し）のmanifestとの後方互換: idが無ければnameをidとして補完。
+    // 既存のGitHub上のフォルダパスはnameベースだったため、pathが無い場合もそこから補う。
+    (data.python||[]).forEach(p=>{
+      if(!p.id) p.id = p.name;
+      if(!p.path) p.path = `data/python/${p.id}/`;
+    });
+    (data.design||[]).forEach(d=>{
+      if(!d.id) d.id = d.name;
+      if(!d.path) d.path = `data/design/${d.id}/DESIGN.md`;
+    });
+    manifestState = {data, sha};
     setConnStatus('online');
     hideBanner();
     renderPythonList();
@@ -660,49 +1019,57 @@ async function bootApp(){
 /* =========================================================
    TAB SWITCHING
    ========================================================= */
-let currentTab='python';
-const els={
-  tabs:document.querySelectorAll('.tab'),
-  panels:{python:document.getElementById('panel-python'),design:document.getElementById('panel-design')},
-  uploadBtn:document.getElementById('uploadBtn'),
-  uploadLabel:document.getElementById('uploadLabel'),
-  ctxMode:document.getElementById('ctxMode'),
-  ctxHint:document.getElementById('ctxHint'),
-  folderInput:document.getElementById('folderInput'),
-  mdInput:document.getElementById('mdInput'),
-  pyEmpty:document.getElementById('pyEmpty'),
-  pyList:document.getElementById('pyList'),
-  dmEmpty:document.getElementById('dmEmpty'),
-  dmView:document.getElementById('dmView'),
-  dmDescRow:document.getElementById('dmDescRow'),
-  designList:document.getElementById('designList'),
-  dmPendingBar:document.getElementById('dmPendingBar'),
+let currentTab = 'python';
+const els = {
+  tabs: document.querySelectorAll('.tab'),
+  panels: { python: document.getElementById('panel-python'), design: document.getElementById('panel-design') },
+  uploadBtn: document.getElementById('uploadBtn'),
+  uploadLabel: document.getElementById('uploadLabel'),
+  ctxMode: document.getElementById('ctxMode'),
+  ctxHint: document.getElementById('ctxHint'),
+  folderInput: document.getElementById('folderInput'),
+  mdInput: document.getElementById('mdInput'),
+  pyEmpty: document.getElementById('pyEmpty'),
+  pyList: document.getElementById('pyList'),
+  dmEmpty: document.getElementById('dmEmpty'),
+  dmView: document.getElementById('dmView'),
+  dmTitleRow: document.getElementById('dmTitleRow'),
+  dmTitleInput: document.getElementById('dmTitleInput'),
+  dmDescRow: document.getElementById('dmDescRow'),
+  designList: document.getElementById('designList'),
+  dmGallery: document.getElementById('dmGallery'),
+  dmPendingBar: document.getElementById('dmPendingBar'),
+  dmRawEdit: document.getElementById('dmRawEdit'),
+  dmAddImgBtn: document.getElementById('dmAddImgBtn'),
+  dmAddImgInput: document.getElementById('dmAddImgInput'),
 };
 
-els.tabs.forEach(t=>{ t.addEventListener('click',()=>switchTab(t.dataset.tab)); });
+els.tabs.forEach(t=>{
+  t.addEventListener('click',()=>switchTab(t.dataset.tab));
+});
 function switchTab(name){
-  currentTab=name;
+  currentTab = name;
   els.tabs.forEach(t=>{
-    const on=t.dataset.tab===name;
+    const on = t.dataset.tab===name;
     t.classList.toggle('active',on);
-    t.setAttribute('aria-selected',on?'true':'false');
+    t.setAttribute('aria-selected', on?'true':'false');
   });
-  els.panels.python.classList.toggle('active',name==='python');
-  els.panels.design.classList.toggle('active',name==='design');
+  els.panels.python.classList.toggle('active', name==='python');
+  els.panels.design.classList.toggle('active', name==='design');
+
   if(name==='python'){
-    els.ctxMode.innerHTML='MODE // <span class="em">PYTHON</span>';
-    els.ctxHint.textContent='フォルダごとアップロード可能。各プロジェクトに用途を一言で記録します。';
-    els.uploadLabel.textContent='UPLOAD FOLDER';
+    els.ctxMode.innerHTML = 'MODE // <span class="em">PYTHON</span>';
+    els.ctxHint.textContent = 'フォルダごとアップロード可能。各プロジェクトに用途を一言で記録します。';
+    els.uploadLabel.textContent = 'UPLOAD FOLDER';
   }else{
-    // [V3] 画像の記載を削除
-    els.ctxMode.innerHTML='MODE // <span class="em" style="color:var(--secondary-container)">DESIGN.md</span>';
-    els.ctxHint.textContent='DESIGN.md をドラッグ＆ドロップ（フォルダごとでもOK）。frontmatter を解析してプレビューします。';
-    els.uploadLabel.textContent='UPLOAD .md';
+    els.ctxMode.innerHTML = 'MODE // <span class="em" style="color:var(--secondary-container)">DESIGN.md</span>';
+    els.ctxHint.textContent = 'DESIGN.md と画像をアップロード。frontmatter を解析してデザインをプレビューします。';
+    els.uploadLabel.textContent = 'UPLOAD .md / IMG';
   }
 }
 
 /* =========================================================
-   UPLOAD ROUTING
+   UPLOAD ROUTING ― タブで挙動が変わる
    ========================================================= */
 els.uploadBtn.addEventListener('click',()=>{
   if(!isConfigured()){
@@ -714,615 +1081,858 @@ els.uploadBtn.addEventListener('click',()=>{
   els.uploadBtn.classList.add('glitching');
   setTimeout(()=>els.uploadBtn.classList.remove('glitching'),650);
   if(currentTab==='python'){ els.folderInput.click(); }
-  else{ els.mdInput.click(); }
+  else { els.mdInput.click(); }
 });
 els.folderInput.addEventListener('change',e=>{ handleFolder(e.target.files); e.target.value=''; });
 els.mdInput.addEventListener('change',e=>{ handleDesignFiles(e.target.files); e.target.value=''; });
 
 /* =========================================================
-   PYTHON: 一覧描画
+   PYTHON: 一覧描画（manifest.json ベース）
+   id = GitHub上のフォルダ実体（不変）／ name = 画面表示タイトル（EDITで変更可）
    ========================================================= */
 function renderPythonList(){
   els.pyList.innerHTML='';
-  const list=manifestState.data.python||[];
-  els.pyEmpty.style.display=list.length?'none':'block';
-  list.forEach(proj=>els.pyList.appendChild(buildProjectCard(proj,false)));
+  const list = manifestState.data.python || [];
+  els.pyEmpty.style.display = list.length ? 'none' : 'block';
+  list.forEach(proj=> els.pyList.appendChild(buildProjectCard(proj, 'synced')));
 }
 
-function buildProjectCard(proj,pending){
-  const wrap=document.createElement('div');
+const editingPython = {}; // id -> {removeSet:Set<path>, addFiles:File[], loaded:bool, allItems:[]}
+
+function buildProjectCard(proj, mode){ // mode: 'synced' | 'pendingNew' | 'editing'
+  const wrap = document.createElement('div');
   wrap.className='project';
-  wrap.dataset.name=proj.name;
-  const head=document.createElement('div');
+  wrap.dataset.id = proj.id;
+
+  const head = document.createElement('div');
   head.className='project-head';
-  head.innerHTML=`
-    <span class="folder-tab">FOLDER</span>
-    <span class="project-name" title="${escapeHtml(proj.name)}">${escapeHtml(proj.name)}</span>
-    <span class="project-meta mono">${proj.fileCount||0} files · ${fmtDate(proj.updated)}</span>`;
-  const desc=document.createElement('div');
+  if(mode==='editing'){
+    head.innerHTML = `
+      <span class="folder-tab">FOLDER</span>
+      <input class="title-input" data-role="title" type="text" value="${escapeHtml(proj.name)}" style="flex:1;min-width:120px">
+      <span class="project-meta mono">${proj.fileCount||0} files · ${fmtDate(proj.updated)}</span>`;
+  }else{
+    head.innerHTML = `
+      <span class="folder-tab">FOLDER</span>
+      <span class="project-name" title="${escapeHtml(proj.name)}">${escapeHtml(proj.name)}</span>
+      <span class="project-meta mono">${proj.fileCount||0} files · ${fmtDate(proj.updated)}</span>`;
+  }
+
+  const desc = document.createElement('div');
   desc.className='desc-row';
-  desc.innerHTML=`<label class="caps">WHAT IT DOES // 一言説明</label>
+  desc.innerHTML = `<label class="caps">WHAT IT DOES // 一言説明</label>
     <input class="desc-input" type="text" value="${escapeHtml(proj.desc||'')}" placeholder="例）上場企業のPVティアを判定するデータパイプライン" />`;
-  const tree=document.createElement('div');
+
+  const tree = document.createElement('div');
   tree.className='filetree';
-  tree.innerHTML=pending
-    ?`<div class="mono" style="color:var(--outline-variant);font-size:12px;padding:10px 16px">${(proj._files||[]).length} 件のファイルを準備済み（COMMITで送信）</div>`
-    :`<div class="mono" style="color:var(--outline-variant);font-size:12px;padding:10px 16px">「LOAD FILES」でファイル一覧を取得します。</div>`;
-  const actions=document.createElement('div');
+  if(mode==='pendingNew'){
+    tree.innerHTML = `<div class="mono" style="color:var(--outline-variant);font-size:12px;padding:10px 16px">${(proj._files||[]).length} 件のファイルを準備済み（COMMITで送信）</div>`;
+  }else if(mode==='editing'){
+    tree.innerHTML = `<div class="mono" style="padding:10px 16px"><span class="spin"></span> 読込中...</div>`;
+  }else{
+    tree.innerHTML = `<div class="mono" style="color:var(--outline-variant);font-size:12px;padding:10px 16px">「LOAD FILES」でファイル一覧を取得します。</div>`;
+  }
+
+  const actions = document.createElement('div');
   actions.className='row-actions';
-  if(pending){
-    actions.innerHTML=`<span class="badge pending">PENDING（未コミット）</span>
+  if(mode==='pendingNew'){
+    actions.innerHTML = `<span class="badge pending">PENDING（未コミット）</span>
       <button class="btn-sm primary" data-act="commit" type="button">COMMIT TO GITHUB</button>
       <button class="btn-sm danger" data-act="cancel" type="button">CANCEL</button>`;
+  }else if(mode==='editing'){
+    actions.innerHTML = `<span class="badge pending">EDIT中</span>
+      <button class="btn-sm" data-act="addfiles" type="button">+ ADD FILES</button>
+      <button class="btn-sm primary" data-act="commitedit" type="button">SAVE CHANGES</button>
+      <button class="btn-sm danger" data-act="canceledit" type="button">CANCEL</button>
+      <input type="file" class="hidden-input" data-role="addfiles-input" multiple>`;
   }else{
-    actions.innerHTML=`<span class="badge synced">SYNCED</span>
+    actions.innerHTML = `<span class="badge synced">SYNCED</span>
       <button class="btn-sm" data-act="loadtree" type="button">LOAD FILES</button>
-      <button class="btn-sm primary" data-act="savedesc" type="button">SAVE DESC</button>
+      <button class="btn-sm" data-act="savedesc" type="button">SAVE DESC</button>
+      <button class="btn-sm primary" data-act="edit" type="button">EDIT</button>
       <button class="btn-sm danger" data-act="delete" type="button">DELETE</button>`;
   }
+
   wrap.appendChild(head); wrap.appendChild(desc); wrap.appendChild(tree); wrap.appendChild(actions);
-  actions.querySelectorAll('button').forEach(btn=>{
-    btn.addEventListener('click',()=>handleProjectAction(btn,btn.dataset.act,proj,wrap,pending));
+
+  actions.querySelectorAll('button[data-act]').forEach(btn=>{
+    btn.addEventListener('click', ()=>handleProjectAction(btn, btn.dataset.act, proj, wrap, mode));
   });
+
+  if(mode==='editing'){
+    enterProjectEditMode(proj, wrap);
+  }
+
   return wrap;
 }
 
-function renderFileTree(treeEl,items,prefix){
+function renderFileTree(treeEl, items, prefix, opts){
+  opts = opts || {};
   treeEl.innerHTML='';
   if(!items.length){ treeEl.innerHTML='<div class="mono" style="padding:10px 16px;color:var(--outline-variant)">ファイルなし</div>'; return; }
   items.sort((a,b)=>a.path.localeCompare(b.path));
   items.forEach(it=>{
-    const rel=it.path.slice(prefix.length);
-    const parts=rel.split('/');
-    const depth=parts.length-1;
-    const indent='　'.repeat(Math.max(0,depth-1))+(depth>0?'└ ':'');
-    const name=parts[parts.length-1];
-    const row=document.createElement('div');
+    const rel = it.path.slice(prefix.length);
+    const parts = rel.split('/');
+    const depth = parts.length-1;
+    const indent = '　'.repeat(Math.max(0,depth-1)) + (depth>0?'└ ':'');
+    const name = parts[parts.length-1];
+    const row = document.createElement('div');
     row.className='file-item';
-    row.innerHTML=`
+    row.dataset.path = it.path;
+    row.innerHTML = `
       <span class="ext ${extClass(name)}">${extLabel(name)}</span>
       <span class="path"><span class="indent">${indent}</span>${escapeHtml(name)}</span>
       <span class="size">${fmtSize(it.size||0)}</span>`;
+    if(opts.removable){
+      const rm = document.createElement('button');
+      rm.type='button'; rm.className='rm-file'; rm.textContent='✕'; rm.title='このファイルを削除対象にする';
+      rm.addEventListener('click', ()=>{
+        const set = opts.removeSet;
+        if(set.has(it.path)){ set.delete(it.path); row.classList.remove('marked-remove'); rm.textContent='✕'; }
+        else{ set.add(it.path); row.classList.add('marked-remove'); rm.textContent='戻す'; }
+      });
+      row.appendChild(rm);
+    }
     treeEl.appendChild(row);
   });
 }
 
-async function handleProjectAction(btn,act,proj,wrap,pending){
-  const descInput=wrap.querySelector('.desc-input');
-  const treeEl=wrap.querySelector('.filetree');
+/* EDIT中: 新規追加予定ファイルの行を描画 */
+function renderNewFileRows(treeEl, files, onRemove){
+  files.forEach((f, idx)=>{
+    const row = document.createElement('div');
+    row.className='file-item new-file';
+    row.innerHTML = `
+      <span class="ext ${extClass(f.name)}">${extLabel(f.name)}</span>
+      <span class="path">${escapeHtml(f.webkitRelativePath||f.name)}<span class="badge" style="margin-left:8px;font-size:9px">NEW</span></span>
+      <span class="size">${fmtSize(f.size||0)}</span>`;
+    const rm = document.createElement('button');
+    rm.type='button'; rm.className='rm-file'; rm.textContent='✕'; rm.title='追加取り消し';
+    rm.addEventListener('click', ()=>{ onRemove(idx); });
+    row.appendChild(rm);
+    treeEl.appendChild(row);
+  });
+}
+
+async function enterProjectEditMode(proj, wrap){
+  const treeEl = wrap.querySelector('.filetree');
+  const state = editingPython[proj.id] = editingPython[proj.id] || {removeSet:new Set(), addFiles:[], allItems:[]};
+  try{
+    const root = await getRootTree();
+    const items = root.tree.filter(t=>t.path.startsWith(proj.path) && t.type==='blob' && !t.path.endsWith('_meta.json'));
+    state.allItems = items;
+    redrawEditTree(treeEl, proj, state);
+  }catch(e){
+    treeEl.innerHTML = `<div class="mono" style="padding:10px 16px;color:var(--error)">読込エラー: ${escapeHtml(friendlyError(e))}</div>`;
+  }
+  const addInput = wrap.querySelector('[data-role="addfiles-input"]');
+  const addBtn = wrap.querySelector('[data-act="addfiles"]');
+  if(addBtn && addInput){
+    addBtn.addEventListener('click', ()=>addInput.click());
+    addInput.addEventListener('change', ()=>{
+      Array.from(addInput.files).forEach(f=> state.addFiles.push(f));
+      addInput.value='';
+      redrawEditTree(treeEl, proj, state);
+    });
+  }
+}
+
+function redrawEditTree(treeEl, proj, state){
+  treeEl.innerHTML='';
+  renderFileTree(treeEl, state.allItems, proj.path, {removable:true, removeSet:state.removeSet});
+  renderNewFileRows(treeEl, state.addFiles, (idx)=>{
+    state.addFiles.splice(idx,1);
+    redrawEditTree(treeEl, proj, state);
+  });
+}
+
+async function handleProjectAction(btn, act, proj, wrap, mode){
+  const descInput = wrap.querySelector('.desc-input');
+  const treeEl = wrap.querySelector('.filetree');
   try{
     if(act==='loadtree'){
-      treeEl.innerHTML=`<div class="mono" style="padding:10px 16px"><span class="spin"></span> 読込中...</div>`;
-      const root=await getRootTree();
-      const prefix=proj.path;
-      const items=root.tree.filter(t=>t.path.startsWith(prefix)&&t.type==='blob'&&!t.path.endsWith('_meta.json'));
-      renderFileTree(treeEl,items,prefix);
-    }else if(act==='savedesc'){
-      btn.disabled=true;
-      const newDesc=descInput.value.trim();
-      await saveProjectMeta(proj,newDesc);
-      btn.disabled=false;
+      treeEl.innerHTML = `<div class="mono" style="padding:10px 16px"><span class="spin"></span> 読込中...</div>`;
+      const root = await getRootTree();
+      const prefix = proj.path;
+      const items = root.tree.filter(t=>t.path.startsWith(prefix) && t.type==='blob' && !t.path.endsWith('_meta.json'));
+      renderFileTree(treeEl, items, prefix);
+    }
+    else if(act==='savedesc'){
+      btn.disabled = true;
+      const newDesc = descInput.value.trim();
+      await saveProjectMeta(proj, proj.name, newDesc);
+      btn.disabled = false;
       showBanner(`「${proj.name}」の説明を保存しました。`,'ok');
-    }else if(act==='delete'){
-      if(!confirm(`プロジェクト「${proj.name}」を削除します。GitHub上のファイルも完全に削除されます。よろしいですか？`)) return;
-      btn.disabled=true;
+    }
+    else if(act==='edit'){
+      delete editingPython[proj.id];
+      const card = buildProjectCard(proj, 'editing');
+      wrap.replaceWith(card);
+    }
+    else if(act==='canceledit'){
+      delete editingPython[proj.id];
+      const card = buildProjectCard(proj, 'synced');
+      wrap.replaceWith(card);
+    }
+    else if(act==='commitedit'){
+      const titleInput = wrap.querySelector('[data-role="title"]');
+      const newTitle = (titleInput?.value||proj.name).trim() || proj.name;
+      await commitProjectEdit(proj, newTitle, descInput.value.trim(), wrap, btn);
+    }
+    else if(act==='delete'){
+      const ok = await dangerConfirm(`プロジェクト「${proj.name}」を削除します。GitHub上の全ファイルが完全に削除され、元に戻せません。本当によろしいですか？`);
+      if(!ok) return;
+      btn.disabled = true;
       showBanner(`削除中: ${proj.name} ...`,'info');
-      await deleteFolder(proj.path,`Delete python project: ${proj.name}`);
-      manifestState.data.python=manifestState.data.python.filter(p=>p.name!==proj.name);
-      manifestState.sha=await saveManifest(manifestState.data,manifestState.sha,`Remove ${proj.name} from manifest`);
+      await deleteFolder(proj.path, `Delete python project: ${proj.name}`);
+      manifestState.data.python = manifestState.data.python.filter(p=>p.id!==proj.id);
+      manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `Remove ${proj.name} from manifest`);
       renderPythonList();
       showBanner(`「${proj.name}」を削除しました。`,'ok');
-    }else if(act==='commit'){
-      await commitPendingPython(proj,descInput.value.trim(),wrap,btn);
-    }else if(act==='cancel'){
-      delete pendingPythonFiles[proj.name];
+    }
+    else if(act==='commit'){
+      await commitPendingPython(proj, descInput.value.trim(), wrap, btn);
+    }
+    else if(act==='cancel'){
+      delete pendingPythonFiles[proj.id];
       wrap.remove();
       if(!els.pyList.children.length) els.pyEmpty.style.display='block';
     }
   }catch(e){
     showBanner('エラー: '+friendlyError(e),'error');
-    if(btn) btn.disabled=false;
+    if(btn) btn.disabled = false;
   }
 }
 
-async function saveProjectMeta(proj,desc){
-  const metaPath=proj.path+'_meta.json';
-  const existingSha=await findTreeSha(metaPath);
-  const body={desc,updated:new Date().toISOString()};
-  await ghPutContent(metaPath,utf8ToB64(JSON.stringify(body,null,2)),`Update _meta: ${proj.name}`,existingSha);
+async function saveProjectMeta(proj, title, desc){
+  const metaPath = proj.path + '_meta.json';
+  const existingSha = await findTreeSha(metaPath);
+  const body = {title, desc, updated:new Date().toISOString()};
+  await ghPutContent(metaPath, utf8ToB64(JSON.stringify(body,null,2)), `Update _meta: ${title}`, existingSha);
   invalidateRootTree();
-  const entry=manifestState.data.python.find(p=>p.name===proj.name);
-  if(entry){ entry.desc=desc; entry.updated=body.updated; }
-  manifestState.sha=await saveManifest(manifestState.data,manifestState.sha,`Update desc: ${proj.name}`);
+  const entry = manifestState.data.python.find(p=>p.id===proj.id);
+  if(entry){ entry.name=title; entry.desc=desc; entry.updated=body.updated; }
+  manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `Update meta: ${title}`);
   renderPythonList();
 }
 
+/* EDIT保存: タイトル/説明の更新 ＋ 追加ファイルのコミット ＋ 削除指定ファイルの除去（すべて1コミット） */
+async function commitProjectEdit(proj, newTitle, newDesc, wrap, btn){
+  const state = editingPython[proj.id] || {removeSet:new Set(), addFiles:[]};
+  btn.disabled = true; btn.textContent = 'SAVING...';
+  try{
+    const root = await getRootTree(true);
+    if(root.empty) throw new Error('Git Repository is empty');
+
+    const entries = [];
+    // 削除対象
+    state.removeSet.forEach(p=> entries.push({path:p, mode:'100644', type:'blob', sha:null}));
+    // 追加ファイル
+    for(const f of state.addFiles){
+      const rel = f.webkitRelativePath ? f.webkitRelativePath.split('/').slice(1).join('/') : f.name;
+      const path = `${proj.path}${rel}`;
+      const b64 = await fileToBase64(f);
+      const blob = await ghCreateBlob(b64);
+      entries.push({path, mode:'100644', type:'blob', sha:blob.sha});
+    }
+    const metaBody = {title:newTitle, desc:newDesc, updated:new Date().toISOString()};
+    const metaBlob = await ghCreateBlob(utf8ToB64(JSON.stringify(metaBody,null,2)));
+    entries.push({path:`${proj.path}_meta.json`, mode:'100644', type:'blob', sha:metaBlob.sha});
+
+    const newTree = await ghCreateTree(root.treeSha, entries);
+    const newCommit = await ghCreateCommit(`Edit python project: ${newTitle}`, newTree.sha, root.commitSha);
+    await ghUpdateRef(newCommit.sha);
+    invalidateRootTree();
+
+    const remainingCount = (state.allItems||[]).filter(it=>!state.removeSet.has(it.path)).length + state.addFiles.length;
+    const entry = manifestState.data.python.find(p=>p.id===proj.id);
+    if(entry){ entry.name=newTitle; entry.desc=newDesc; entry.updated=metaBody.updated; entry.fileCount=remainingCount; }
+    manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `Edit python project: ${newTitle}`);
+
+    delete editingPython[proj.id];
+    renderPythonList();
+    showBanner(`「${newTitle}」の変更を保存しました。`,'ok');
+  }catch(e){
+    showBanner('保存に失敗しました: '+friendlyError(e),'error');
+    btn.disabled=false; btn.textContent='SAVE CHANGES';
+  }
+}
+
 /* =========================================================
-   PYTHON: フォルダ取り込み
+   PYTHON: フォルダ取り込み（pending） → COMMIT で送信
+   新規アップロードは常に新しいid（スラッグ）を採番するため、
+   既存プロジェクトを誤って上書きすることはない。
    ========================================================= */
-const pendingPythonFiles={};
+const pendingPythonFiles = {}; // id -> File[]
 
 function handleFolder(fileList){
-  if(!fileList||!fileList.length) return;
+  if(!fileList || !fileList.length) return;
   if(!isConfigured()){ showBanner('先にCONFIGからGitHub接続設定を行ってください。','error'); return; }
-  const files=Array.from(fileList);
-  const groups={};
+  const files = Array.from(fileList);
+  const groups = {};
   files.forEach(f=>{
-    const rel=f.webkitRelativePath||f.name;
-    const top=rel.includes('/')?rel.split('/')[0]:null;
-    const key=top||'__flat__';
+    const rel = f.webkitRelativePath || f.name;
+    const top = rel.includes('/') ? rel.split('/')[0] : null;
+    const key = top || '__flat__';
     (groups[key]=groups[key]||[]).push(f);
   });
+
+  const existingIds = manifestState.data.python.map(p=>p.id).concat(Object.keys(pendingPythonFiles));
+
   Object.keys(groups).forEach(key=>{
-    let name=key;
+    let title = key;
     if(key==='__flat__'){
-      name=prompt('プロジェクト名を入力してください（フォルダとして保存されます）','my-project');
-      if(!name) return;
-      name=name.trim();
-      if(!name) return;
+      title = prompt('プロジェクト名を入力してください（フォルダとして保存されます）','my-project');
+      if(!title) return;
+      title = title.trim();
+      if(!title) return;
     }
-    const already=manifestState.data.python.find(p=>p.name===name);
-    if((already||pendingPythonFiles[name])&&!confirm(`「${name}」は既に存在します。上書き（追加コミット）しますか？`)) return;
-    pendingPythonFiles[name]=groups[key];
+    const id = uniqueSlug(title, existingIds);
+    existingIds.push(id);
+
+    pendingPythonFiles[id] = groups[key];
     els.pyEmpty.style.display='none';
-    const proj={name,desc:already?.desc||'',path:`data/python/${name}/`,fileCount:groups[key].length,updated:new Date().toISOString(),_files:groups[key]};
-    const card=buildProjectCard(proj,true);
+    const proj = {
+      id, name:title, desc:'', path:`data/python/${id}/`,
+      fileCount: groups[key].length, updated: new Date().toISOString(),
+      _files: groups[key]
+    };
+    const card = buildProjectCard(proj, 'pendingNew');
     els.pyList.prepend(card);
   });
 }
 
-async function commitPendingPython(proj,desc,wrap,btn){
-  const files=pendingPythonFiles[proj.name];
-  if(!files||!files.length){ showBanner('アップロード対象のファイルが見つかりません。','error'); return; }
-  btn.disabled=true; btn.textContent='COMMITTING...';
-  const cancelBtn=wrap.querySelector('[data-act="cancel"]');
-  if(cancelBtn) cancelBtn.disabled=true;
+async function commitPendingPython(proj, desc, wrap, btn){
+  const files = pendingPythonFiles[proj.id];
+  if(!files || !files.length){ showBanner('アップロード対象のファイルが見つかりません。','error'); return; }
+  btn.disabled = true; btn.textContent = 'COMMITTING...';
+  const cancelBtn = wrap.querySelector('[data-act="cancel"]');
+  if(cancelBtn) cancelBtn.disabled = true;
   try{
-    const root=await getRootTree(true);
+    const root = await getRootTree(true);
     if(root.empty) throw new Error('Git Repository is empty');
-    const entries=[];
+
+    const entries = [];
     for(const f of files){
-      const rel=f.webkitRelativePath?f.webkitRelativePath.split('/').slice(1).join('/'):f.name;
-      const path=`data/python/${proj.name}/${rel}`;
-      const b64=await fileToBase64(f);
-      const blob=await ghCreateBlob(b64);
-      entries.push({path,mode:'100644',type:'blob',sha:blob.sha});
+      const rel = f.webkitRelativePath ? f.webkitRelativePath.split('/').slice(1).join('/') : f.name;
+      const path = `data/python/${proj.id}/${rel}`;
+      const b64 = await fileToBase64(f);
+      const blob = await ghCreateBlob(b64);
+      entries.push({path, mode:'100644', type:'blob', sha:blob.sha});
     }
-    const metaBody={desc,updated:new Date().toISOString()};
-    const metaBlob=await ghCreateBlob(utf8ToB64(JSON.stringify(metaBody,null,2)));
-    entries.push({path:`data/python/${proj.name}/_meta.json`,mode:'100644',type:'blob',sha:metaBlob.sha});
-    const newTree=await ghCreateTree(root.treeSha,entries);
-    const newCommit=await ghCreateCommit(`Add/update python project: ${proj.name}`,newTree.sha,root.commitSha);
+    const metaBody = {title:proj.name, desc, updated:new Date().toISOString()};
+    const metaBlob = await ghCreateBlob(utf8ToB64(JSON.stringify(metaBody,null,2)));
+    entries.push({path:`data/python/${proj.id}/_meta.json`, mode:'100644', type:'blob', sha:metaBlob.sha});
+
+    const newTree = await ghCreateTree(root.treeSha, entries);
+    const newCommit = await ghCreateCommit(`Add python project: ${proj.name}`, newTree.sha, root.commitSha);
     await ghUpdateRef(newCommit.sha);
     invalidateRootTree();
-    const entry={name:proj.name,desc,path:`data/python/${proj.name}/`,fileCount:files.length,updated:metaBody.updated};
-    const idx=manifestState.data.python.findIndex(p=>p.name===proj.name);
-    if(idx>=0) manifestState.data.python[idx]=entry; else manifestState.data.python.push(entry);
-    manifestState.sha=await saveManifest(manifestState.data,manifestState.sha,`Add/update python project: ${proj.name}`);
-    delete pendingPythonFiles[proj.name];
+
+    const entry = {id:proj.id, name:proj.name, desc, path:`data/python/${proj.id}/`, fileCount:files.length, updated:metaBody.updated};
+    manifestState.data.python.push(entry);
+    manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `Add python project: ${proj.name}`);
+
+    delete pendingPythonFiles[proj.id];
     renderPythonList();
     showBanner(`「${proj.name}」をコミットしました（${files.length} files）。`,'ok');
   }catch(e){
     showBanner('コミットに失敗しました: '+friendlyError(e),'error');
     btn.disabled=false; btn.textContent='COMMIT TO GITHUB';
-    if(cancelBtn) cancelBtn.disabled=false;
+    if(cancelBtn) cancelBtn.disabled = false;
   }
 }
 
 /* =========================================================
-   DESIGN.md: frontmatter パーサ
+   DESIGN.md: 簡易 frontmatter パーサ（--- 〜 --- のYAML風ブロック）
    ========================================================= */
 function parseFrontmatter(text){
-  const m=text.match(/^﻿?---\s*\n([\s\S]*?)\n---/);
-  if(!m) return {meta:{},colors:{},typography:{},spacing:{},hasFM:false};
-  const lines=m[1].split('\n');
-  const meta={}; const colors={}; const typography={}; const spacing={};
-  let section=null; let typoKey=null;
-  const clean=v=>v.replace(/^['"]|['"]$/g,'').trim();
+  const m = text.match(/^﻿?---\s*\n([\s\S]*?)\n---/);
+  if(!m) return {meta:{}, colors:{}, typography:{}, spacing:{}, hasFM:false};
+  const lines = m[1].split('\n');
+  const meta = {}; const colors = {}; const typography = {}; const spacing = {};
+  let section = null;          // 'colors' | 'typography' | 'spacing' | null
+  let typoKey = null;          // 現在のタイポグラフィ・トークン名
+
+  const clean = v => v.replace(/^['"]|['"]$/g,'').trim();
+
   lines.forEach(raw=>{
     if(!raw.trim()) return;
-    const indent=raw.match(/^(\s*)/)[1].length;
-    const line=raw.trim();
-    const kv=line.match(/^([\w-]+):\s*(.*)$/);
-    if(indent===0&&kv){
-      const key=kv[1], val=kv[2];
-      if(key==='colors'){ section='colors'; return; }
-      if(key==='typography'){ section='typography'; return; }
-      if(key==='spacing'){ section='spacing'; return; }
+    const indent = raw.match(/^(\s*)/)[1].length;
+    const line = raw.trim();
+    const kv = line.match(/^([\w-]+):\s*(.*)$/);
+
+    if(indent===0 && kv){
+      const key = kv[1], val = kv[2];
+      if(key==='colors'){section='colors';return;}
+      if(key==='typography'){section='typography';return;}
+      if(key==='spacing'){section='spacing';return;}
       section=null; meta[key]=clean(val); return;
     }
     if(!kv) return;
-    const key=kv[1], val=kv[2];
+    const key = kv[1], val = kv[2];
+
     if(section==='colors'){ colors[key]=clean(val); }
     else if(section==='spacing'){ spacing[key]=clean(val); }
     else if(section==='typography'){
-      if(val===''){ typoKey=key; typography[typoKey]={}; }
-      else if(typoKey&&indent>=4){ typography[typoKey][key]=clean(val); }
+      if(val===''){ typoKey=key; typography[typoKey]={}; }     // 2階層目（トークン名）
+      else if(typoKey && indent>=4){ typography[typoKey][key]=clean(val); } // 3階層目（プロパティ）
     }
   });
-  return {meta,colors,typography,spacing,hasFM:true};
+  return {meta, colors, typography, spacing, hasFM:true};
 }
 
-const FONT_MAP={
+const FONT_MAP = {
   anton:"'Anton', sans-serif",
   spaceGrotesk:"'Space Grotesk', sans-serif",
   jetbrainsMono:"'JetBrains Mono', monospace"
 };
 
-function renderDesign(filename,text){
-  const data=parseFrontmatter(text);
+function renderDesign(filename, text){
+  const data = parseFrontmatter(text);
   els.dmEmpty.style.display='none';
   els.dmView.style.display='grid';
   els.dmDescRow.style.display='block';
 
-  const nm=(data.meta.name||filename.replace(/\.(md|markdown)$/i,'')).trim();
-  const np=nm.split(/\s+/);
-  document.getElementById('dmName').innerHTML=
-    np.length>1?`${np[0]}<span class="sp"> ${np.slice(1).join(' ')}</span>`:`<span class="sp">${escapeHtml(nm)}</span>`;
-  document.getElementById('dmFile').textContent=filename;
-  document.getElementById('dmRaw').textContent=text;
+  // name（frontmatter内の name: があればそれを優先表示。これはファイル内部のプレビュー名であり、
+  // タイル一覧のタイトル（manifestのtitle）とは別概念）
+  const nm = (data.meta.name || filename.replace(/\.(md|markdown)$/i,'')).trim();
+  const np = nm.split(/\s+/);
+  document.getElementById('dmName').innerHTML =
+    np.length>1 ? `${np[0]}<span class="sp"> ${np.slice(1).join(' ')}</span>` : `<span class="sp">${escapeHtml(nm)}</span>`;
+  document.getElementById('dmFile').textContent = filename;
+  els.dmRawEdit.value = text;
+  return { suggestedTitle: (data.meta.name||'').trim() };
 
-  const cWrap=document.getElementById('dmColors');
+  // colors
+  const cWrap = document.getElementById('dmColors');
   cWrap.innerHTML='';
-  const cEntries=Object.entries(data.colors);
+  const cEntries = Object.entries(data.colors);
   if(!cEntries.length){ cWrap.innerHTML='<div class="mono" style="color:var(--outline-variant);font-size:12px">colors 未検出</div>'; }
   cEntries.forEach(([k,v])=>{
-    const div=document.createElement('div');
+    const div = document.createElement('div');
     div.className='swatch';
-    div.innerHTML=`<div class="chip" style="background:${escapeHtml(v)}"></div>
+    div.innerHTML = `<div class="chip" style="background:${escapeHtml(v)}"></div>
       <div class="meta"><span class="k" title="${escapeHtml(k)}">${escapeHtml(k)}</span><span class="v">${escapeHtml(v)}</span></div>`;
     cWrap.appendChild(div);
   });
 
-  const tWrap=document.getElementById('dmTypo');
+  // typography
+  const tWrap = document.getElementById('dmTypo');
   tWrap.innerHTML='';
-  const tEntries=Object.entries(data.typography);
+  const tEntries = Object.entries(data.typography);
   if(!tEntries.length){ tWrap.innerHTML='<div class="mono" style="color:var(--outline-variant);font-size:12px">typography 未検出</div>'; }
   tEntries.forEach(([token,props])=>{
-    const ff=FONT_MAP[props.fontFamily]||props.fontFamily||'inherit';
-    let fs=parseInt(props.fontSize)||20; if(fs>40) fs=40;
-    const row=document.createElement('div');
+    const ff = FONT_MAP[props.fontFamily] || props.fontFamily || 'inherit';
+    let fs = parseInt(props.fontSize)||20; if(fs>40) fs=40; // プレビュー用に上限
+    const row = document.createElement('div');
     row.className='typo-row';
-    row.innerHTML=`<span class="tk">${escapeHtml(token)}</span>
+    row.innerHTML = `<span class="tk">${escapeHtml(token)}</span>
       <div class="sample" style="font-family:${ff};font-size:${fs}px;font-weight:${props.fontWeight||400};letter-spacing:${props.letterSpacing||'normal'}">Anywhere.file</div>
       <span class="spec">${escapeHtml(props.fontFamily||'')} · ${escapeHtml(props.fontSize||'')} · w${escapeHtml(props.fontWeight||'')}</span>`;
     tWrap.appendChild(row);
   });
 
-  const sWrap=document.getElementById('dmSpacing');
+  // spacing
+  const sWrap = document.getElementById('dmSpacing');
   sWrap.innerHTML='';
-  const sEntries=Object.entries(data.spacing);
+  const sEntries = Object.entries(data.spacing);
   if(!sEntries.length){ sWrap.innerHTML='<div class="mono" style="color:var(--outline-variant);font-size:12px">spacing 未検出</div>'; }
   sEntries.forEach(([k,v])=>{
-    const row=document.createElement('div');
+    const row = document.createElement('div');
     row.className='kv';
-    row.innerHTML=`<span class="kk">${escapeHtml(k)}</span><span class="vv">${escapeHtml(v)}</span>`;
+    row.innerHTML = `<span class="kk">${escapeHtml(k)}</span><span class="vv">${escapeHtml(v)}</span>`;
     sWrap.appendChild(row);
   });
 }
 
 /* =========================================================
-   DESIGN.md: 一覧描画  [V3] title対応・RENAMEボタン追加
+   DESIGN.md: 一覧描画（manifest.json ベース）
    ========================================================= */
 function renderDesignList(){
-  const list=manifestState.data.design||[];
+  const list = manifestState.data.design || [];
   els.designList.innerHTML='';
-  els.dmEmpty.style.display=list.length?'none':'block';
+  els.dmEmpty.style.display = list.length ? 'none' : 'block';
   if(!list.length){
     els.dmView.style.display='none';
+    els.dmTitleRow.style.display='none';
     els.dmDescRow.style.display='none';
     return;
   }
   list.forEach(d=>{
-    const card=document.createElement('div');
+    const card = document.createElement('div');
     card.className='design-card';
-    card.dataset.name=d.name;
-    // [V3] title（表示名）がなければフォルダ名にフォールバック
-    const displayTitle=d.title||d.name;
-    card.innerHTML=`
-      <div class="dc-name" title="${escapeHtml(displayTitle)}">${escapeHtml(displayTitle)}</div>
-      <div class="dc-sub">KEY: ${escapeHtml(d.name)}</div>
-      <div class="dc-desc">${escapeHtml(d.desc||'説明未設定')}</div>
-      <div class="dc-meta">${fmtDate(d.updated)}</div>
+    card.dataset.id=d.id;
+    card.innerHTML = `
+      <div class="dc-name" title="${escapeHtml(d.name)}">${escapeHtml(d.name)}</div>
+      <div class="dc-desc">${escapeHtml(d.desc || '説明未設定')}</div>
+      <div class="dc-meta">${(d.images||[]).length} images · ${fmtDate(d.updated)}</div>
       <div class="dc-actions">
         <button class="btn-sm primary" data-act="preview" type="button">PREVIEW</button>
-        <button class="btn-sm" data-act="rename" type="button">RENAME</button>
+        <button class="btn-sm" data-act="edit" type="button">EDIT</button>
         <button class="btn-sm danger" data-act="delete" type="button">DELETE</button>
       </div>`;
     card.querySelectorAll('button').forEach(btn=>{
-      btn.addEventListener('click',()=>handleDesignAction(btn,btn.dataset.act,d,card));
+      btn.addEventListener('click', ()=>handleDesignAction(btn, btn.dataset.act, d, card));
     });
     els.designList.appendChild(card);
   });
 }
 
-async function handleDesignAction(btn,act,d,card){
+async function handleDesignAction(btn, act, d, card){
   try{
     if(act==='preview'){
-      pendingDesign=null;
+      pendingDesign = null;
       els.dmPendingBar.style.display='none';
       document.querySelectorAll('.design-card').forEach(c=>c.classList.remove('active'));
       card.classList.add('active');
       els.dmView.style.display='grid';
       els.dmEmpty.style.display='none';
+      els.dmTitleRow.style.display='none';
       els.dmDescRow.style.display='block';
+      els.dmAddImgBtn.style.display='none';
+      els.dmRawEdit.setAttribute('readonly','');
       await loadDesignPreview(d);
-
-    // [V3] RENAME: manifest の title フィールドを更新（フォルダパスは変えない）
-    }else if(act==='rename'){
-      const newTitle=prompt('新しいタイトルを入力してください',d.title||d.name);
-      if(newTitle===null) return;
-      const trimmed=newTitle.trim();
-      if(!trimmed) return;
-      btn.disabled=true;
-      const metaPath=`data/design/${d.name}/_meta.json`;
-      const existingSha=await findTreeSha(metaPath);
-      const body={title:trimmed,desc:d.desc||'',updated:new Date().toISOString()};
-      await ghPutContent(metaPath,utf8ToB64(JSON.stringify(body,null,2)),`Rename: ${d.name} → ${trimmed}`,existingSha);
-      invalidateRootTree();
-      d.title=trimmed;
-      d.updated=body.updated;
-      manifestState.sha=await saveManifest(manifestState.data,manifestState.sha,`Rename design: ${d.name}`);
-      renderDesignList();
-      const newCard=els.designList.querySelector(`.design-card[data-name="${CSS.escape(d.name)}"]`);
-      if(newCard&&card.classList.contains('active')) newCard.classList.add('active');
-      showBanner(`タイトルを「${trimmed}」に変更しました。`,'ok');
-
+    }else if(act==='edit'){
+      document.querySelectorAll('.design-card').forEach(c=>c.classList.remove('active'));
+      card.classList.add('active');
+      await startDesignEdit(d);
     }else if(act==='delete'){
-      if(!confirm(`デザイン「${d.title||d.name}」を削除します。GitHub上のファイルも完全に削除されます。よろしいですか？`)) return;
-      btn.disabled=true;
+      const ok = await dangerConfirm(`デザイン「${d.name}」を削除します。GitHub上の全ファイル（DESIGN.md・画像）が完全に削除され、元に戻せません。本当によろしいですか？`);
+      if(!ok) return;
+      btn.disabled = true;
       showBanner(`削除中: ${d.name} ...`,'info');
-      const prefix=`data/design/${d.name}/`;
-      await deleteFolder(prefix,`Delete design: ${d.name}`);
-      manifestState.data.design=manifestState.data.design.filter(x=>x.name!==d.name);
-      manifestState.sha=await saveManifest(manifestState.data,manifestState.sha,`Remove design ${d.name} from manifest`);
+      const prefix = `data/design/${d.id}/`;
+      await deleteFolder(prefix, `Delete design: ${d.name}`);
+      manifestState.data.design = manifestState.data.design.filter(x=>x.id!==d.id);
+      manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `Remove design ${d.name} from manifest`);
       if(card.classList.contains('active')){
         els.dmView.style.display='none';
+        els.dmTitleRow.style.display='none';
         els.dmDescRow.style.display='none';
       }
       renderDesignList();
-      showBanner(`「${d.title||d.name}」を削除しました。`,'ok');
+      showBanner(`「${d.name}」を削除しました。`,'ok');
     }
   }catch(e){
     showBanner('エラー: '+friendlyError(e),'error');
-    if(btn) btn.disabled=false;
+    if(btn) btn.disabled = false;
   }
 }
 
-/* [V3] 画像ロードを削除したシンプル版 */
 async function loadDesignPreview(d){
-  document.getElementById('dmDescInput').value=d.desc||'';
-  document.getElementById('dmDescInput').dataset.name=d.name;
-  document.getElementById('dmRaw').textContent='読込中...';
+  document.getElementById('dmDescInput').value = d.desc||'';
+  document.getElementById('dmDescInput').dataset.id = d.id;
+
+  els.dmGallery.innerHTML = `<div class="mono" style="grid-column:1/-1;padding:10px;color:var(--outline-variant)"><span class="spin"></span> 読込中...</div>`;
+  els.dmRawEdit.value = '読込中...';
+
   try{
-    const mdB64=await fetchBlobBase64(d.path);
+    const mdB64 = await fetchBlobBase64(d.path);
     if(mdB64){
-      renderDesign(d.path.split('/').pop(),b64ToUtf8(mdB64));
+      renderDesign(d.path.split('/').pop(), b64ToUtf8(mdB64));
     }else{
-      document.getElementById('dmRaw').textContent='(DESIGN.mdが見つかりません)';
+      els.dmRawEdit.value = '(DESIGN.mdが見つかりません)';
     }
   }catch(e){
     showBanner('DESIGN.mdの読込に失敗しました: '+friendlyError(e),'error');
   }
+
+  const images = (d.images && d.images.length) ? d.images : [];
+  if(!images.length){ els.dmGallery.innerHTML = '<div class="gempty">画像未登録</div>'; return; }
+  const figs = [];
+  for(const imgPath of images){
+    try{
+      const b64 = await fetchBlobBase64(imgPath);
+      if(!b64) continue;
+      const url = `data:${mimeForPath(imgPath)};base64,${b64}`;
+      figs.push(`<div class="shot"><img src="${url}" alt="${escapeHtml(imgPath)}"><div class="cap" title="${escapeHtml(imgPath)}">${escapeHtml(imgPath.split('/').pop())}</div></div>`);
+    }catch(e){
+      showBanner('画像の読込に失敗しました: '+friendlyError(e),'error');
+    }
+  }
+  els.dmGallery.innerHTML = figs.length ? figs.join('') : '<div class="gempty">画像未登録</div>';
 }
 
-document.getElementById('dmDescSave').addEventListener('click',async()=>{
-  const input=document.getElementById('dmDescInput');
-  const name=input.dataset.name;
-  if(!name){ showBanner('まずPREVIEWでデザインを選択してください。','error'); return; }
-  const btn=document.getElementById('dmDescSave');
-  btn.disabled=true;
+document.getElementById('dmDescSave').addEventListener('click', async ()=>{
+  const input = document.getElementById('dmDescInput');
+  const id = input.dataset.id;
+  if(!id){ showBanner('まずPREVIEWでデザインを選択してください。','error'); return; }
+  const entry = manifestState.data.design.find(x=>x.id===id);
+  if(!entry){ showBanner('対象のデザインが見つかりません。','error'); return; }
+  const btn = document.getElementById('dmDescSave');
+  btn.disabled = true;
   try{
-    const desc=input.value.trim();
-    const metaPath=`data/design/${name}/_meta.json`;
-    const existingSha=await findTreeSha(metaPath);
-    const entry=manifestState.data.design.find(x=>x.name===name);
-    const body={title:entry?.title||name,desc,updated:new Date().toISOString()};
-    await ghPutContent(metaPath,utf8ToB64(JSON.stringify(body,null,2)),`Update _meta: design/${name}`,existingSha);
+    const desc = input.value.trim();
+    const metaPath = `data/design/${id}/_meta.json`;
+    const existingSha = await findTreeSha(metaPath);
+    await ghPutContent(metaPath, utf8ToB64(JSON.stringify({title:entry.name, desc, updated:new Date().toISOString()},null,2)), `Update _meta: design/${entry.name}`, existingSha);
     invalidateRootTree();
-    if(entry){ entry.desc=desc; }
-    manifestState.sha=await saveManifest(manifestState.data,manifestState.sha,`Update desc: design/${name}`);
+    entry.desc=desc;
+    manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `Update desc: design/${entry.name}`);
     renderDesignList();
-    const card=els.designList.querySelector(`.design-card[data-name="${CSS.escape(name)}"]`);
+    // re-mark active card
+    const card = els.designList.querySelector(`.design-card[data-id="${CSS.escape(id)}"]`);
     if(card) card.classList.add('active');
-    showBanner(`「${name}」の説明を保存しました。`,'ok');
+    showBanner(`「${entry.name}」の説明を保存しました。`,'ok');
   }catch(e){
     showBanner('エラー: '+friendlyError(e),'error');
   }finally{
-    btn.disabled=false;
+    btn.disabled = false;
   }
 });
 
 /* =========================================================
-   DESIGN.md: アップロード  [V3] 画像なし・フォルダ名使用・上書き確認なし
+   DESIGN.md: アップロード／編集（pending） → COMMIT で送信
+   ―――――――――――――――――――――――――――――――――――――――――――
+   【重要】旧バージョンの致命的バグ：プロジェクト名（保存フォルダ／manifestキー）を
+   アップロードしたファイル名からそのまま生成していたため、DESIGN.md は常に
+   ファイル名が "DESIGN.md" である＝常に同じキーになり、別プロジェクトを
+   アップロードするたびに既存データが問答無用で上書きされていた。
+   → 新規アップロードは常に一意なid（スラッグ）を新規採番するので上書きされない。
+      タイトル（一覧タイルの表示名）は id とは独立した項目として、
+      アップロード時にユーザーが入力 or frontmatterのname:から提案される。
+      既存デザインを更新したい場合は「EDIT」から編集する（id は保持される）。
    ========================================================= */
-let pendingDesign=null; // {name, mdFile}
+let pendingDesign = null; // {id(null=新規), title, mdText, newImages:[], existingImages:[], removedImages:[], _imgCache:{}}
 
-function handleDesignFiles(fileList){
-  if(!fileList||!fileList.length) return;
-  if(!isConfigured()){ showBanner('先にCONFIGからGitHub接続設定を行ってください。','error'); return; }
-
-  const files=Array.from(fileList);
-  // [V3] .md ファイルのみ対象（画像は無視）
-  const mdFile=files.find(f=>/\.(md|markdown)$/i.test(f.name)||f.type==='text/markdown');
-  if(!mdFile){ showBanner('.mdファイルが見つかりませんでした。','error'); return; }
-
-  let name;
-  const relPath=mdFile.webkitRelativePath||'';
-  if(relPath.includes('/')){
-    // [V3] フォルダごとドロップ → フォルダ名をデザイン名に使用
-    name=relPath.split('/')[0];
-  }else{
-    // 単体ファイル → 名前を入力させる
-    const defaultName=mdFile.name.replace(/\.(md|markdown)$/i,'').trim();
-    name=prompt('デザイン名を入力してください（保存フォルダ名になります）',defaultName);
-    if(!name) return;
-    name=name.trim();
-    if(!name) return;
-  }
-
-  // [V3] 上書き確認ダイアログ廃止 → そのまま続行
-
-  pendingDesign={name,mdFile};
-
+function showDesignPanel(){
   document.querySelectorAll('.design-card').forEach(c=>c.classList.remove('active'));
   els.dmEmpty.style.display='none';
   els.dmView.style.display='grid';
+  els.dmTitleRow.style.display='block';
   els.dmDescRow.style.display='block';
-
-  const existing=manifestState.data.design.find(d=>d.name===name);
-  document.getElementById('dmDescInput').value=existing?.desc||'';
-  document.getElementById('dmDescInput').dataset.name='';
-
-  const reader=new FileReader();
-  reader.onload=ev=>renderDesign(mdFile.name,ev.target.result);
-  reader.readAsText(mdFile);
-
-  els.dmPendingBar.style.display='flex';
-  document.getElementById('dmCommitBtn').disabled=false;
-  document.getElementById('dmCommitBtn').textContent='COMMIT TO GITHUB';
+  els.dmAddImgBtn.style.display='inline-flex';
+  els.dmRawEdit.removeAttribute('readonly');
 }
 
-document.getElementById('dmCancelBtn').addEventListener('click',()=>{
-  pendingDesign=null;
+function handleDesignFiles(fileList){
+  if(!fileList || !fileList.length) return;
+  if(!isConfigured()){ showBanner('先にCONFIGからGitHub接続設定を行ってください。','error'); return; }
+  const files = Array.from(fileList);
+  const mdFile = files.find(f=>/\.(md|markdown)$/i.test(f.name) || f.type==='text/markdown');
+  const images = files.filter(f=>f.type.startsWith('image/'));
+  if(!mdFile && !images.length) return;
+
+  // 新規アップロードは常に新規デザインとして扱う（id:null）。既存データの上書きはしない。
+  pendingDesign = {id:null, title:'', mdText:'', newImages:images, existingImages:[], removedImages:[], _imgCache:{}};
+
+  showDesignPanel();
+  document.getElementById('dmTitleInput').value = '';
+  document.getElementById('dmDescInput').value = '';
+  document.getElementById('dmDescInput').dataset.id = '';
+
+  if(mdFile){
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const text = String(ev.target.result);
+      pendingDesign.mdText = text;
+      const {suggestedTitle} = renderDesign(mdFile.name, text);
+      if(suggestedTitle) document.getElementById('dmTitleInput').value = suggestedTitle;
+      els.dmRawEdit.removeAttribute('readonly');
+    };
+    reader.readAsText(mdFile);
+  }else{
+    document.getElementById('dmName').innerHTML = '<span class="sp">UNTITLED</span>';
+    document.getElementById('dmFile').textContent = '(DESIGN.md未添付 ― 下のTITLEを入力してください)';
+    els.dmRawEdit.value = '';
+    els.dmRawEdit.removeAttribute('readonly');
+    document.getElementById('dmColors').innerHTML='';
+    document.getElementById('dmTypo').innerHTML='';
+    document.getElementById('dmSpacing').innerHTML='';
+  }
+  renderPendingGallery();
+
+  els.dmPendingBar.style.display='flex';
+  document.getElementById('dmCommitBtn').disabled = false;
+  document.getElementById('dmCommitBtn').textContent = 'COMMIT TO GITHUB';
+}
+
+async function startDesignEdit(d){
+  pendingDesign = {
+    id: d.id, title: d.name,
+    mdText: '', newImages: [], existingImages: [...(d.images||[])], removedImages: [],
+    _imgCache: {}
+  };
+  showDesignPanel();
+  document.getElementById('dmTitleInput').value = d.name;
+  document.getElementById('dmDescInput').value = d.desc||'';
+  document.getElementById('dmDescInput').dataset.id = '';
+
+  els.dmRawEdit.value = '読込中...';
+  els.dmRawEdit.setAttribute('readonly','');
+  try{
+    const mdB64 = await fetchBlobBase64(d.path);
+    const text = mdB64 ? b64ToUtf8(mdB64) : '';
+    pendingDesign.mdText = text;
+    renderDesign(d.path.split('/').pop(), text);
+  }catch(e){
+    showBanner('DESIGN.mdの読込に失敗しました: '+friendlyError(e),'error');
+  }
+  els.dmRawEdit.removeAttribute('readonly');
+
+  renderPendingGallery();
+  await prefetchPendingImages();
+
+  els.dmPendingBar.style.display='flex';
+  document.getElementById('dmCommitBtn').disabled = false;
+  document.getElementById('dmCommitBtn').textContent = 'SAVE CHANGES';
+}
+
+function renderPendingGallery(){
+  if(!pendingDesign) return;
+  const c = els.dmGallery;
+  const remaining = pendingDesign.existingImages.filter(p=>!pendingDesign.removedImages.includes(p));
+  if(!remaining.length && !pendingDesign.newImages.length){ c.innerHTML='<div class="gempty">画像未登録</div>'; return; }
+  c.innerHTML='';
+  remaining.forEach(p=>{
+    const url = pendingDesign._imgCache[p];
+    const div = document.createElement('div'); div.className='shot';
+    div.innerHTML = url
+      ? `<img src="${url}" alt="${escapeHtml(p)}"><div class="cap">${escapeHtml(p.split('/').pop())}</div>`
+      : `<div class="mono" style="padding:20px;color:var(--outline-variant);text-align:center"><span class="spin"></span></div><div class="cap">${escapeHtml(p.split('/').pop())}</div>`;
+    const rm = document.createElement('button');
+    rm.type='button'; rm.className='rm'; rm.textContent='✕'; rm.title='このデザインから外す';
+    rm.addEventListener('click', ()=>{ pendingDesign.removedImages.push(p); renderPendingGallery(); });
+    div.appendChild(rm);
+    c.appendChild(div);
+  });
+  pendingDesign.newImages.forEach((f,idx)=>{
+    const url = URL.createObjectURL(f);
+    const div = document.createElement('div'); div.className='shot';
+    div.innerHTML = `<img src="${url}" alt="${escapeHtml(f.name)}"><div class="cap">${escapeHtml(f.name)}（新規）</div>`;
+    const rm = document.createElement('button');
+    rm.type='button'; rm.className='rm'; rm.textContent='✕'; rm.title='追加取り消し';
+    rm.addEventListener('click', ()=>{ pendingDesign.newImages.splice(idx,1); renderPendingGallery(); });
+    div.appendChild(rm);
+    c.appendChild(div);
+  });
+}
+
+async function prefetchPendingImages(){
+  if(!pendingDesign) return;
+  for(const p of pendingDesign.existingImages){
+    if(!pendingDesign) return;
+    if(pendingDesign._imgCache[p]) continue;
+    try{
+      const b64 = await fetchBlobBase64(p);
+      if(b64 && pendingDesign) pendingDesign._imgCache[p] = `data:${mimeForPath(p)};base64,${b64}`;
+    }catch(_){ /* ignore individual failures */ }
+    if(pendingDesign) renderPendingGallery();
+  }
+}
+
+els.dmAddImgBtn.addEventListener('click', ()=> els.dmAddImgInput.click());
+els.dmAddImgInput.addEventListener('change', ()=>{
+  if(!pendingDesign) return;
+  Array.from(els.dmAddImgInput.files).forEach(f=> pendingDesign.newImages.push(f));
+  els.dmAddImgInput.value='';
+  renderPendingGallery();
+});
+
+document.getElementById('dmCancelBtn').addEventListener('click', ()=>{
+  pendingDesign = null;
   els.dmPendingBar.style.display='none';
   if(!manifestState.data.design.length){
     els.dmView.style.display='none';
+    els.dmTitleRow.style.display='none';
     els.dmDescRow.style.display='none';
     els.dmEmpty.style.display='block';
   }else{
     renderDesignList();
     els.dmView.style.display='none';
+    els.dmTitleRow.style.display='none';
     els.dmDescRow.style.display='none';
   }
 });
 
-/* [V3] 画像アップロード処理を完全削除 */
-document.getElementById('dmCommitBtn').addEventListener('click',async()=>{
+document.getElementById('dmCommitBtn').addEventListener('click', async ()=>{
   if(!pendingDesign) return;
-  const btn=document.getElementById('dmCommitBtn');
-  const cancelBtn=document.getElementById('dmCancelBtn');
-  btn.disabled=true; btn.textContent='COMMITTING...'; cancelBtn.disabled=true;
-  const desc=document.getElementById('dmDescInput').value.trim();
+  const title = document.getElementById('dmTitleInput').value.trim();
+  if(!title){ showBanner('TITLE（何のDESIGN.mdか）を入力してください。','error'); return; }
+  const btn = document.getElementById('dmCommitBtn');
+  const cancelBtn = document.getElementById('dmCancelBtn');
+  btn.disabled=true; btn.textContent = pendingDesign.id ? 'SAVING...' : 'COMMITTING...'; cancelBtn.disabled=true;
+  const desc = document.getElementById('dmDescInput').value.trim();
   try{
-    const {name,mdFile}=pendingDesign;
-    const basePath=`data/design/${name}/`;
-    const existingEntry=manifestState.data.design.find(d=>d.name===name);
-    const mdPath=existingEntry?.path||`${basePath}DESIGN.md`;
+    const existingIds = manifestState.data.design.map(x=>x.id);
+    const id = pendingDesign.id || uniqueSlug(title, existingIds);
+    const basePath = `data/design/${id}/`;
+    const mdPath = `${basePath}DESIGN.md`;
 
-    if(mdFile){
-      const b64=await fileToBase64(mdFile);
-      const existingSha=await findTreeSha(mdPath);
-      await ghPutContent(mdPath,b64,`Update DESIGN.md: ${name}`,existingSha);
-      invalidateRootTree();
-    }
-
-    // [V3] title を _meta.json に保存（既存タイトルを引き継ぐ）
-    const metaBody={
-      title: existingEntry?.title||name,
-      desc,
-      updated: new Date().toISOString()
-    };
-    const metaSha=await findTreeSha(`${basePath}_meta.json`);
-    await ghPutContent(`${basePath}_meta.json`,utf8ToB64(JSON.stringify(metaBody,null,2)),`Update _meta: design/${name}`,metaSha);
+    const mdText = els.dmRawEdit.value;
+    const existingMdSha = await findTreeSha(mdPath);
+    await ghPutContent(mdPath, utf8ToB64(mdText), `${pendingDesign.id?'Update':'Add'} DESIGN.md: ${title}`, existingMdSha);
     invalidateRootTree();
 
-    // [V3] images フィールドなし
-    const entryData={name,title:metaBody.title,desc,path:mdPath,updated:metaBody.updated};
-    if(existingEntry) Object.assign(existingEntry,entryData);
-    else manifestState.data.design.push(entryData);
-    manifestState.sha=await saveManifest(manifestState.data,manifestState.sha,`Add/update design: ${name}`);
+    if(pendingDesign.removedImages.length){
+      await deletePaths(pendingDesign.removedImages, `Remove images: ${title}`);
+    }
 
-    pendingDesign=null;
+    let imagePaths = pendingDesign.existingImages.filter(p=>!pendingDesign.removedImages.includes(p));
+    for(const img of pendingDesign.newImages){
+      const imgPath = `${basePath}images/${img.name}`;
+      const b64 = await fileToBase64(img);
+      const existingSha = await findTreeSha(imgPath);
+      await ghPutContent(imgPath, b64, `Add image: ${title}/${img.name}`, existingSha);
+      invalidateRootTree();
+      if(!imagePaths.includes(imgPath)) imagePaths.push(imgPath);
+    }
+
+    const metaBody = {title, desc, updated:new Date().toISOString()};
+    const metaSha = await findTreeSha(`${basePath}_meta.json`);
+    await ghPutContent(`${basePath}_meta.json`, utf8ToB64(JSON.stringify(metaBody,null,2)), `Update _meta: design/${title}`, metaSha);
+    invalidateRootTree();
+
+    const entryData = {id, name:title, desc, path:mdPath, images:imagePaths, updated:metaBody.updated};
+    const existingEntry = manifestState.data.design.find(x=>x.id===id);
+    if(existingEntry) Object.assign(existingEntry, entryData);
+    else manifestState.data.design.push(entryData);
+    manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `${pendingDesign.id?'Edit':'Add'} design: ${title}`);
+
+    pendingDesign = null;
     els.dmPendingBar.style.display='none';
+    els.dmTitleRow.style.display='none';
     renderDesignList();
-    showBanner(`「${name}」をコミットしました。`,'ok');
+    showBanner(`「${title}」をコミットしました。`,'ok');
   }catch(e){
     showBanner('コミットに失敗しました: '+friendlyError(e),'error');
   }finally{
-    btn.disabled=false; btn.textContent='COMMIT TO GITHUB'; cancelBtn.disabled=false;
+    btn.disabled=false; btn.textContent = pendingDesign && pendingDesign.id ? 'SAVE CHANGES' : 'COMMIT TO GITHUB'; cancelBtn.disabled=false;
   }
 });
 
 /* =========================================================
-   DRAG & DROP  [V3] バグ修正版・パネル全体に対応
-   - 修正1: pending カウンター方式（done フラグ廃止）
-   - 修正2: readEntries を空になるまで繰り返し（100件超え対応）
-   - 修正3: dragDepth カウンターで dragleave の誤発火を防止
-   - 修正4: パネル全体をドロップゾーンに（コンテンツがある時もD&D可能）
+   DRAG & DROP ― 各パネルの空エリアに対応
    ========================================================= */
-function setupDrop(zone,onFiles){
-  let dragDepth=0;
-
-  zone.addEventListener('dragenter',e=>{
-    e.preventDefault();
-    dragDepth++;
-    zone.classList.add('drag-over');
-  });
-  zone.addEventListener('dragleave',e=>{
-    e.preventDefault();
-    if(--dragDepth<=0){ dragDepth=0; zone.classList.remove('drag-over'); }
-  });
-  zone.addEventListener('dragover',e=>e.preventDefault());
-
+function setupDrop(zone, onFiles){
+  ['dragenter','dragover'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();zone.classList.add('drag');}));
+  ['dragleave','drop'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();zone.classList.remove('drag');}));
   zone.addEventListener('drop',e=>{
-    e.preventDefault();
-    dragDepth=0;
-    zone.classList.remove('drag-over');
-
-    const items=e.dataTransfer.items;
-    if(items&&items.length&&items[0].webkitGetAsEntry){
-      const all=[]; let pending=0;
-
-      const done=()=>{ if(pending===0) onFiles(all); };
-
+    const items = e.dataTransfer.items;
+    if(items && items.length && items[0].webkitGetAsEntry){
+      const all=[]; let pending=0; let done=false;
+      const finish=()=>{ if(done && pending===0) onFiles(all); };
       const walk=(entry,path)=>{
-        pending++;
-        if(entry.isFile){
-          entry.file(f=>{
-            try{ Object.defineProperty(f,'webkitRelativePath',{value:path+f.name}); }catch(_){}
-            all.push(f);
-            pending--;
-            done();
-          });
-        }else if(entry.isDirectory){
-          const rd=entry.createReader();
-          // readEntries は最大100件しか返さないので空になるまで繰り返す
-          const readAll=()=>{
-            rd.readEntries(ents=>{
-              if(!ents.length){
-                pending--;
-                done();
-              }else{
-                ents.forEach(en=>walk(en,path+entry.name+'/'));
-                readAll();
-              }
-            });
-          };
-          readAll();
-        }
+        if(entry.isFile){ pending++; entry.file(f=>{ try{Object.defineProperty(f,'webkitRelativePath',{value:path+f.name});}catch(_){} all.push(f); pending--; finish(); }); }
+        else if(entry.isDirectory){ const rd=entry.createReader(); rd.readEntries(ents=>{ ents.forEach(en=>walk(en, path+entry.name+'/')); finish(); }); }
       };
-
-      Array.from(items).forEach(it=>{
-        const en=it.webkitGetAsEntry&&it.webkitGetAsEntry();
-        if(en) walk(en,'');
-      });
-      // アイテムがなかった場合の即時完了
-      if(pending===0) onFiles(all);
+      Array.from(items).forEach(it=>{ const en=it.webkitGetAsEntry&&it.webkitGetAsEntry(); if(en) walk(en,''); });
+      done=true; finish();
     }else{
       onFiles(Array.from(e.dataTransfer.files));
     }
   });
 }
-
-// [V3] パネル全体をドロップゾーンに（空の状態でも、コンテンツがある状態でもD&D可能）
-setupDrop(document.getElementById('panel-python'),handleFolder);
-setupDrop(document.getElementById('panel-design'),handleDesignFiles);
+setupDrop(els.pyEmpty, handleFolder);
+setupDrop(els.dmEmpty, handleDesignFiles);
 
 /* =========================================================
    INIT
    ========================================================= */
 bootApp();
+
 </script>
 </body>
 </html>
