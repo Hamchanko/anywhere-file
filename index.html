@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 /* =========================================================
    DESIGN TOKENS  ―  DESIGN.md (Vivit Cyber-Pop) 準拠
@@ -291,6 +292,8 @@ header{position:relative;z-index:2;padding-top:28px;padding-bottom:18px}
 }
 .project-name{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:.03em;color:var(--glitch-white);text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .project-meta{color:var(--outline);font-size:12px}
+.desc-text{padding:12px 16px;color:var(--on-surface-variant);font-size:13px;border-bottom:1px dashed var(--outline-variant)}
+.desc-text.empty{color:var(--outline-variant);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em}
 
 .desc-row{padding:14px 16px;border-bottom:1px dashed var(--outline-variant)}
 .desc-row label{display:block;color:var(--secondary-container);margin-bottom:6px}
@@ -336,13 +339,15 @@ header{position:relative;z-index:2;padding-top:28px;padding-bottom:18px}
    DESIGN.md PANEL ― list + preview
    ========================================================= */
 .design-list{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px}
-@media(min-width:700px){.design-list{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}}
+@media(min-width:700px){.design-list{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}}
 .design-card{
   background:var(--surface-container-low);border:2px solid var(--glitch-white);
   box-shadow:5px 5px 0 0 rgba(0,0,0,.6);padding:16px;display:flex;flex-direction:column;gap:8px;
 }
 .design-card .dc-name{font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;color:var(--glitch-white);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .design-card .dc-desc{color:var(--on-surface-variant);font-size:13px;min-height:18px}
+.design-card .dc-desc.empty{color:var(--outline-variant);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em}
+.design-card{cursor:pointer}
 .design-card .dc-meta{color:var(--outline);font-size:11px;font-family:'JetBrains Mono',monospace}
 .design-card .dc-actions{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
 .design-card.active{border-color:var(--secondary-container);box-shadow:5px 5px 0 0 var(--primary-container)}
@@ -532,7 +537,7 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
   <div class="actionbar">
     <div class="context-label">
       <span class="ctx-mode" id="ctxMode">MODE // <span class="em">PYTHON</span></span>
-      <small class="mono" id="ctxHint">フォルダごとアップロード可能。各プロジェクトに用途を一言で記録します。</small>
+      <small class="mono" id="ctxHint"></small>
     </div>
     <button class="btn-upload" id="uploadBtn" type="button">
       <span class="arrow">▲</span><span id="uploadLabel">UPLOAD FOLDER</span>
@@ -562,16 +567,13 @@ footer{margin:48px 0 36px;padding-top:18px;border-top:1px dashed var(--outline-v
     <div id="designList" class="design-list"></div>
 
     <div class="desc-row" id="dmTitleRow" style="display:none">
-      <label class="caps">TITLE // 何のDESIGN.mdか一言で識別</label>
+      <label class="caps">TITLE</label>
       <input class="desc-input" type="text" id="dmTitleInput" placeholder="例）Vivit Cyber-Pop ダッシュボードテーマ">
     </div>
 
     <div class="desc-row" id="dmDescRow" style="display:none">
-      <label class="caps">WHAT IT DOES // 一言説明</label>
+      <label class="caps">WHAT IT DOES</label>
       <input class="desc-input" type="text" id="dmDescInput" placeholder="例）Vivit Cyber-Pop ダッシュボードテーマ">
-      <div class="row-actions" style="padding-left:0;border-top:none">
-        <button class="btn-sm primary" id="dmDescSave" type="button">SAVE TITLE / DESC</button>
-      </div>
     </div>
 
     <div class="row-actions" id="dmPendingBar" style="display:none;border:2px solid var(--electric-yellow);margin-bottom:18px">
@@ -667,6 +669,13 @@ function b64ToUtf8(b64){ return decodeURIComponent(escape(atob(String(b64).repla
 function mimeForPath(path){
   const ext = (path.split('.').pop()||'').toLowerCase();
   return {png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',gif:'image/gif',webp:'image/webp',svg:'image/svg+xml',bmp:'image/bmp'}[ext] || 'application/octet-stream';
+}
+function triggerDownload(blob, filename){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 4000);
 }
 /* slug（フォルダ実体のID）とtitle（画面表示名）を分離するためのヘルパー。
    これにより「同じファイル名（例:DESIGN.md）を何度アップロードしても
@@ -1062,11 +1071,11 @@ function switchTab(name){
 
   if(name==='python'){
     els.ctxMode.innerHTML = 'MODE // <span class="em">PYTHON</span>';
-    els.ctxHint.textContent = 'フォルダごとアップロード可能。各プロジェクトに用途を一言で記録します。';
+    els.ctxHint.textContent = '';
     els.uploadLabel.textContent = 'UPLOAD FOLDER';
   }else{
     els.ctxMode.innerHTML = 'MODE // <span class="em" style="color:var(--secondary-container)">DESIGN.md</span>';
-    els.ctxHint.textContent = 'DESIGN.md と画像をアップロード。frontmatter を解析してデザインをプレビューします。';
+    els.ctxHint.textContent = '';
     els.uploadLabel.textContent = 'UPLOAD .md / IMG';
   }
 }
@@ -1121,19 +1130,23 @@ function buildProjectCard(proj, mode){ // mode: 'synced' | 'pendingNew' | 'editi
       <span class="project-meta mono">${proj.fileCount||0} files · ${fmtDate(proj.updated)}</span>`;
   }
 
-  const desc = document.createElement('div');
-  desc.className='desc-row';
-  desc.innerHTML = `<label class="caps">WHAT IT DOES // 一言説明</label>
-    <input class="desc-input" type="text" value="${escapeHtml(proj.desc||'')}" placeholder="例）上場企業のPVティアを判定するデータパイプライン" />`;
-
-  const tree = document.createElement('div');
-  tree.className='filetree';
-  if(mode==='pendingNew'){
-    tree.innerHTML = `<div class="mono" style="color:var(--outline-variant);font-size:12px;padding:10px 16px">${(proj._files||[]).length} 件のファイルを準備済み（COMMITで送信）</div>`;
-  }else if(mode==='editing'){
-    tree.innerHTML = `<div class="mono" style="padding:10px 16px"><span class="spin"></span> 読込中...</div>`;
+  let desc, tree;
+  if(mode==='synced'){
+    // 読み取り専用タイル：編集可能な入力欄は一切出さない（EDITを押すまでは何も書き換えられない）
+    desc = document.createElement('div');
+    desc.className = 'desc-text' + (proj.desc ? '' : ' empty');
+    desc.textContent = proj.desc || 'NO DESC // UNSET';
   }else{
-    tree.innerHTML = `<div class="mono" style="color:var(--outline-variant);font-size:12px;padding:10px 16px">「LOAD FILES」でファイル一覧を取得します。</div>`;
+    desc = document.createElement('div');
+    desc.className='desc-row';
+    desc.innerHTML = `<label class="caps">WHAT IT DOES</label>
+      <input class="desc-input" type="text" value="${escapeHtml(proj.desc||'')}" placeholder="例）上場企業のPVティアを判定するデータパイプライン" />`;
+
+    tree = document.createElement('div');
+    tree.className='filetree';
+    tree.innerHTML = mode==='pendingNew'
+      ? `<div class="mono" style="color:var(--outline-variant);font-size:12px;padding:10px 16px">${(proj._files||[]).length} 件のファイルを準備済み（COMMITで送信）</div>`
+      : `<div class="mono" style="padding:10px 16px"><span class="spin"></span> 読込中...</div>`;
   }
 
   const actions = document.createElement('div');
@@ -1149,14 +1162,13 @@ function buildProjectCard(proj, mode){ // mode: 'synced' | 'pendingNew' | 'editi
       <button class="btn-sm danger" data-act="canceledit" type="button">CANCEL</button>
       <input type="file" class="hidden-input" data-role="addfiles-input" multiple>`;
   }else{
-    actions.innerHTML = `<span class="badge synced">SYNCED</span>
-      <button class="btn-sm" data-act="loadtree" type="button">LOAD FILES</button>
-      <button class="btn-sm" data-act="savedesc" type="button">SAVE DESC</button>
+    actions.innerHTML = `
       <button class="btn-sm primary" data-act="edit" type="button">EDIT</button>
+      <button class="btn-sm" data-act="download" type="button">DOWNLOAD</button>
       <button class="btn-sm danger" data-act="delete" type="button">DELETE</button>`;
   }
 
-  wrap.appendChild(head); wrap.appendChild(desc); wrap.appendChild(tree); wrap.appendChild(actions);
+  wrap.appendChild(head); wrap.appendChild(desc); if(tree) wrap.appendChild(tree); wrap.appendChild(actions);
 
   actions.querySelectorAll('button[data-act]').forEach(btn=>{
     btn.addEventListener('click', ()=>handleProjectAction(btn, btn.dataset.act, proj, wrap, mode));
@@ -1250,23 +1262,28 @@ function redrawEditTree(treeEl, proj, state){
   });
 }
 
+/* プロジェクト一式をzipでローカルにダウンロード（GitHub上の実ファイルをそのまま取得） */
+async function downloadProject(proj){
+  const root = await getRootTree();
+  const items = root.tree.filter(t=>t.path.startsWith(proj.path) && t.type==='blob' && !t.path.endsWith('_meta.json'));
+  if(!items.length){ showBanner('ダウンロードできるファイルが見つかりません。','error'); return; }
+  const zip = new JSZip();
+  for(const it of items){
+    const blob = await ghGetBlob(it.sha);
+    const rel = it.path.slice(proj.path.length);
+    zip.file(rel, blob.content, {base64:true});
+  }
+  const content = await zip.generateAsync({type:'blob'});
+  triggerDownload(content, `${proj.name}.zip`);
+}
+
 async function handleProjectAction(btn, act, proj, wrap, mode){
   const descInput = wrap.querySelector('.desc-input');
-  const treeEl = wrap.querySelector('.filetree');
   try{
-    if(act==='loadtree'){
-      treeEl.innerHTML = `<div class="mono" style="padding:10px 16px"><span class="spin"></span> 読込中...</div>`;
-      const root = await getRootTree();
-      const prefix = proj.path;
-      const items = root.tree.filter(t=>t.path.startsWith(prefix) && t.type==='blob' && !t.path.endsWith('_meta.json'));
-      renderFileTree(treeEl, items, prefix);
-    }
-    else if(act==='savedesc'){
-      btn.disabled = true;
-      const newDesc = descInput.value.trim();
-      await saveProjectMeta(proj, proj.name, newDesc);
-      btn.disabled = false;
-      showBanner(`「${proj.name}」の説明を保存しました。`,'ok');
+    if(act==='download'){
+      btn.disabled = true; const orig = btn.textContent; btn.textContent='ZIPPING...';
+      await downloadProject(proj);
+      btn.disabled = false; btn.textContent = orig;
     }
     else if(act==='edit'){
       delete editingPython[proj.id];
@@ -1306,18 +1323,6 @@ async function handleProjectAction(btn, act, proj, wrap, mode){
     showBanner('エラー: '+friendlyError(e),'error');
     if(btn) btn.disabled = false;
   }
-}
-
-async function saveProjectMeta(proj, title, desc){
-  const metaPath = proj.path + '_meta.json';
-  const existingSha = await findTreeSha(metaPath);
-  const body = {title, desc, updated:new Date().toISOString()};
-  await ghPutContent(metaPath, utf8ToB64(JSON.stringify(body,null,2)), `Update _meta: ${title}`, existingSha);
-  invalidateRootTree();
-  const entry = manifestState.data.python.find(p=>p.id===proj.id);
-  if(entry){ entry.name=title; entry.desc=desc; entry.updated=body.updated; }
-  manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `Update meta: ${title}`);
-  renderPythonList();
 }
 
 /* EDIT保存: タイトル/説明の更新 ＋ 追加ファイルのコミット ＋ 削除指定ファイルの除去（すべて1コミット） */
@@ -1569,38 +1574,46 @@ function renderDesignList(){
     card.dataset.id=d.id;
     card.innerHTML = `
       <div class="dc-name" title="${escapeHtml(d.name)}">${escapeHtml(d.name)}</div>
-      <div class="dc-desc">${escapeHtml(d.desc || 'NO DESC // UNSET')}</div>
+      <div class="dc-desc${d.desc?'':' empty'}">${escapeHtml(d.desc || 'NO DESC // UNSET')}</div>
       <div class="dc-meta">${(d.images||[]).length} images · ${fmtDate(d.updated)}</div>
       <div class="dc-actions">
-        <button class="btn-sm primary" data-act="preview" type="button">PREVIEW</button>
-        <button class="btn-sm" data-act="edit" type="button">EDIT</button>
+        <button class="btn-sm primary" data-act="edit" type="button">EDIT</button>
+        <button class="btn-sm" data-act="download" type="button">DOWNLOAD</button>
         <button class="btn-sm danger" data-act="delete" type="button">DELETE</button>
       </div>`;
     card.querySelectorAll('button').forEach(btn=>{
-      btn.addEventListener('click', ()=>handleDesignAction(btn, btn.dataset.act, d, card));
+      btn.addEventListener('click', (e)=>{ e.stopPropagation(); handleDesignAction(btn, btn.dataset.act, d, card); });
     });
+    // タイル本体（ボタン以外）をクリックすると読み取り専用プレビューを開く
+    card.addEventListener('click', ()=> openDesignPreview(d, card));
     els.designList.appendChild(card);
   });
 }
 
+async function openDesignPreview(d, card){
+  pendingDesign = null;
+  els.dmPendingBar.style.display='none';
+  document.querySelectorAll('.design-card').forEach(c=>c.classList.remove('active'));
+  card.classList.add('active');
+  els.dmView.style.display='grid';
+  els.dmEmpty.style.display='none';
+  els.dmTitleRow.style.display='none';
+  els.dmDescRow.style.display='none';
+  els.dmAddImgBtn.style.display='none';
+  els.dmRawEdit.setAttribute('readonly','');
+  await loadDesignPreview(d);
+}
+
 async function handleDesignAction(btn, act, d, card){
   try{
-    if(act==='preview'){
-      pendingDesign = null;
-      els.dmPendingBar.style.display='none';
-      document.querySelectorAll('.design-card').forEach(c=>c.classList.remove('active'));
-      card.classList.add('active');
-      els.dmView.style.display='grid';
-      els.dmEmpty.style.display='none';
-      els.dmTitleRow.style.display='none';
-      els.dmDescRow.style.display='block';
-      els.dmAddImgBtn.style.display='none';
-      els.dmRawEdit.setAttribute('readonly','');
-      await loadDesignPreview(d);
-    }else if(act==='edit'){
+    if(act==='edit'){
       document.querySelectorAll('.design-card').forEach(c=>c.classList.remove('active'));
       card.classList.add('active');
       await startDesignEdit(d);
+    }else if(act==='download'){
+      btn.disabled = true; const orig = btn.textContent; btn.textContent='ZIPPING...';
+      await downloadDesign(d);
+      btn.disabled = false; btn.textContent = orig;
     }else if(act==='delete'){
       const ok = await dangerConfirm(`デザイン「${d.name}」を削除します。GitHub上の全ファイル（DESIGN.md・画像）が完全に削除され、元に戻せません。本当によろしいですか？`);
       if(!ok) return;
@@ -1624,10 +1637,22 @@ async function handleDesignAction(btn, act, d, card){
   }
 }
 
-async function loadDesignPreview(d){
-  document.getElementById('dmDescInput').value = d.desc||'';
-  document.getElementById('dmDescInput').dataset.id = d.id;
+/* デザイン一式（DESIGN.md + images/）をzipでローカルにダウンロード */
+async function downloadDesign(d){
+  const zip = new JSZip();
+  const mdB64 = await fetchBlobBase64(d.path);
+  zip.file('DESIGN.md', mdB64 || '', {base64: !!mdB64});
+  for(const imgPath of (d.images||[])){
+    try{
+      const b64 = await fetchBlobBase64(imgPath);
+      if(b64) zip.file(`images/${imgPath.split('/').pop()}`, b64, {base64:true});
+    }catch(_){ /* ignore individual failures */ }
+  }
+  const content = await zip.generateAsync({type:'blob'});
+  triggerDownload(content, `${d.name}.zip`);
+}
 
+async function loadDesignPreview(d){
   els.dmGallery.innerHTML = `<div class="mono" style="grid-column:1/-1;padding:10px;color:var(--outline-variant)"><span class="spin"></span> 読込中...</div>`;
   els.dmRawEdit.value = '読込中...';
 
@@ -1657,34 +1682,6 @@ async function loadDesignPreview(d){
   }
   els.dmGallery.innerHTML = figs.length ? figs.join('') : '<div class="gempty">画像未登録</div>';
 }
-
-document.getElementById('dmDescSave').addEventListener('click', async ()=>{
-  const input = document.getElementById('dmDescInput');
-  const id = input.dataset.id;
-  if(!id){ showBanner('まずPREVIEWでデザインを選択してください。','error'); return; }
-  const entry = manifestState.data.design.find(x=>x.id===id);
-  if(!entry){ showBanner('対象のデザインが見つかりません。','error'); return; }
-  const btn = document.getElementById('dmDescSave');
-  btn.disabled = true;
-  try{
-    const desc = input.value.trim();
-    const metaPath = `data/design/${id}/_meta.json`;
-    const existingSha = await findTreeSha(metaPath);
-    await ghPutContent(metaPath, utf8ToB64(JSON.stringify({title:entry.name, desc, updated:new Date().toISOString()},null,2)), `Update _meta: design/${entry.name}`, existingSha);
-    invalidateRootTree();
-    entry.desc=desc;
-    manifestState.sha = await saveManifest(manifestState.data, manifestState.sha, `Update desc: design/${entry.name}`);
-    renderDesignList();
-    // re-mark active card
-    const card = els.designList.querySelector(`.design-card[data-id="${CSS.escape(id)}"]`);
-    if(card) card.classList.add('active');
-    showBanner(`「${entry.name}」の説明を保存しました。`,'ok');
-  }catch(e){
-    showBanner('エラー: '+friendlyError(e),'error');
-  }finally{
-    btn.disabled = false;
-  }
-});
 
 /* =========================================================
    DESIGN.md: アップロード／編集（pending） → COMMIT で送信
